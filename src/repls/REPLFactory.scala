@@ -61,7 +61,14 @@ This assignment requires you to parse expressions such as a + b * c and deal wit
 
 We also expect you to "pretty print" a simplified expression such as ((a * b) + (c * d)) as a * b + c * d. For this, it is handy to realize when parenthesis are needed when printing. If the current expression is l `op` r, where l is the left-sub expression, r is the right sub-expression and `op` is the operator, then parenthesis are needed around l iff:
 * l is an expression with an operator `op2` AND
-* `op2` has lower precende than `op`
+* `op2` has lower precedence than `op`
+
+Operator used and their precedence
+Op  precedence level
++        2
+-        2
+*        3
+
 
 Suggested approach:
 
