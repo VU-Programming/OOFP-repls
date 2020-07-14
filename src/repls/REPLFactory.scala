@@ -75,7 +75,7 @@ Suggested approach:
 
 object REPLFactory {
 
-  def makeIntREPL() : REPL = _
-  def makeMultiSetREPL() : REPL = _
+  def makeIntREPL() : REPL = null // Implement me!
+  def makeMultiSetREPL() : REPL = null // Implement me!
 
 }

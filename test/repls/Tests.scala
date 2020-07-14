@@ -25,6 +25,14 @@ class Tests extends FunSuite with TimeLimitedTests {
     }
   }
 
+  test("assign") {
+    val repl = REPLFactory.makeIntREPL()
+
+    assertResult("21") {
+      repl.readEval("1 + 4 * 5")
+    }
+  }
+
   override def timeLimit: Span = Span(1,Seconds)
   // this is need to actually stop when the buggy code contains an infinite loop...
   override val defaultTestSignaler: Signaler = ReallyStopSignaler
