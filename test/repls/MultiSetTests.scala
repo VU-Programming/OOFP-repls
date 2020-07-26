@@ -9,163 +9,197 @@ import org.scalatestplus.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class MultiSetTests extends FunSuite with TimeLimitedTests {
   test("MultiSets can represent the empty Set") {
-    assertResult("{}") {
-      MultiSet("{}").toString
+    assertResult(Iterable.empty) {
+      MultiSet(Iterable.empty).asIterable
     }
   }
 
   test("MultiSets should be generic") {
-    assertResult("{a}") {
-      MultiSet("{a}").toString
+    assertResult(Iterable('a')) {
+      MultiSet(Iterable('a')).asIterable
     }
 
-    assertResult("{element}") {
-      MultiSet("{element}").toString
+    assertResult(Iterable("element")) {
+      MultiSet(Iterable("element")).asIterable
     }
 
-    assertResult("{1}") {
-      MultiSet("{1}").toString
+    assertResult(Iterable(1)) {
+      MultiSet(Iterable(1)).asIterable
     }
 
-    assertResult("{1.0}") {
-      MultiSet("{1.0}").toString
+    assertResult(Iterable(1.0)) {
+      MultiSet(Iterable(1.0)).asIterable
     }
   }
 
   test("MultiSets have multiplicity") {
-    assertResult("{a,b,c}") {
-      MultiSet("{a,b,c}").toString
+    assertResult(Iterable('a','b','c')) {
+      MultiSet(Iterable('a','b','c')).asIterable.toSeq.sorted
     }
 
-    assertResult("{a,a,a}") {
-      MultiSet("{a,a,a}").toString
+    assertResult(Iterable('a','a','a')) {
+      MultiSet(Iterable('a','a','a')).asIterable.toSeq.sorted
     }
 
-    assertResult("{1,1,2,2,3}") {
-      MultiSet("{1,1,2,2,3}").toString
+    assertResult(Iterable(1,1,2,2,3)) {
+      MultiSet(Iterable(1,1,2,2,3)).asIterable.toSeq.sorted
+    }
+  }
+
+  test("MultiSets have the correct string representation") {
+    assertResult("{}") {
+      MultiSet(Iterable.empty).toString
+    }
+
+    assertResult("{1,1,2}") {
+      MultiSet(Iterable(1,1,2)).toString
+    }
+
+    assertResult("{a,a,a,b,c}") {
+      MultiSet(Iterable('a','b','c','a','a')).toString
     }
   }
 
   test("MultiSets can be added") {
-    val emptySet = MultiSet("{}")
+    assertResult(Iterable('a')) {
+      val singleElement = MultiSet(Iterable('a'))
+      val emptySet = MultiSet[Char](Iterable.empty)
 
-    assertResult("{a}") {
-      val singleElement = MultiSet("{a}")
-      (emptySet + singleElement).toString
+      (emptySet + singleElement).asIterable.toSeq.sorted
     }
 
-    assertResult("{1,1,2,3}") {
-      val longerMultiSet = MultiSet("1,1,2,3")
-      (emptySet + longerMultiSet).toString
+    assertResult(Iterable(1,1,2,3)) {
+      val emptySet = MultiSet[Int](Iterable.empty)
+      val longerMultiSet = MultiSet(Iterable(1,1,2,3))
+
+      (emptySet + longerMultiSet).asIterable.toSeq.sorted
     }
 
-    assertResult("{1.0,1.0,1.2,1.2,2.0,2.2,4.0}") {
-      val first = MultiSet("{1.0,1.2,2.0}")
-      val second = MultiSet("{1.0,1.2,2.2,4.0}")
-      (first + second).toString
+    assertResult(Iterable(1.0,1.0,1.2,1.2,2.0,2.2,4.0)) {
+      val first = MultiSet(Iterable(1.0,1.2,2.0))
+      val second = MultiSet(Iterable(1.0,1.2,2.2,4.0))
+
+      (first + second).asIterable.toSeq.sorted(Ordering.Double.TotalOrdering)
     }
 
-    assertResult("{1,2,2,3,4,5,5}") {
-      val first = MultiSet("{1,2}")
-      val second = MultiSet("{2,4,5}")
-      val third = MultiSet("{3,5}")
-      (first + second + third).toString
+    assertResult(Iterable(1,2,2,3,4,5,5)) {
+      val first = MultiSet(Iterable(1,2))
+      val second = MultiSet(Iterable(2,4,5))
+      val third = MultiSet(Iterable(3,5))
+
+      (first + second + third).asIterable.toSeq.sorted
     }
   }
 
   test("MultiSets can be subtracted") {
-    val emptySet = MultiSet("{}")
+    assertResult(Iterable('a')) {
+      val singleElement = MultiSet(Iterable('a'))
+      val emptySet = MultiSet[Char](Iterable.empty)
 
-    assertResult("{a}") {
-      val singleElement = MultiSet("{a}")
-      (singleElement - emptySet).toString
+      (singleElement - emptySet).asIterable.toSeq.sorted
     }
 
-    assertResult("{1,1,2,3}") {
-      val longerMultiSet = MultiSet("1,1,2,3")
-      (longerMultiSet - emptySet).toString
+    assertResult(Iterable(1,1,2,3)) {
+      val longerMultiSet = MultiSet(Iterable(1,1,2,3))
+      val emptySet = MultiSet[Int](Iterable.empty)
+
+      (longerMultiSet - emptySet).asIterable.toSeq.sorted
     }
 
-    assertResult("{}") {
-      val singleElement = MultiSet("{1}")
-      (emptySet - singleElement).toString
+    assertResult(Iterable.empty) {
+      val emptySet = MultiSet[Int](Iterable.empty)
+      val singleElement = MultiSet(Iterable(1))
+
+      (emptySet - singleElement).asIterable.toSeq.sorted
     }
 
-    assertResult("{2.0}") {
-      val first = MultiSet("{1.0,1.2,2.0}")
-      val second = MultiSet("{1.0,1.2,2.2,4.0}")
-      (first - second).toString
+    assertResult(Iterable(2.0)) {
+      val first = MultiSet(Iterable(1.0,1.2,2.0))
+      val second = MultiSet(Iterable(1.0,1.2,2.2,4.0))
+
+      (first - second).asIterable.toSeq.sorted(Ordering.Double.TotalOrdering)
     }
 
-    assertResult("{1}") {
-      val first = MultiSet("{1,2,3}")
-      val second = MultiSet("{2,4,5}")
-      val third = MultiSet("{3,5}")
-      (first - second - third).toString
+    assertResult(Iterable(1)) {
+      val first = MultiSet(Iterable(1,2,3))
+      val second = MultiSet(Iterable(2,4,5))
+      val third = MultiSet(Iterable(3,5))
+
+      (first - second - third).asIterable.toSeq.sorted
     }
   }
 
   test("MultiSets have intersections") {
-    val emptySet = MultiSet("{}")
+    assertResult(Iterable.empty) {
+      val singleElement = MultiSet(Iterable('a'))
+      val emptySet = MultiSet[Char](Iterable.empty)
 
-    assertResult("{}") {
-      val singleElement = MultiSet("{a}")
-      (singleElement * emptySet).toString
+      (singleElement * emptySet).asIterable.toSeq.sorted
     }
 
-    assertResult("{}") {
-      val longerMultiSet = MultiSet("1,1,2,3")
-      (longerMultiSet * emptySet).toString
+    assertResult(Iterable.empty) {
+      val longerMultiSet = MultiSet(Iterable(1,1,2,3))
+      val emptySet = MultiSet[Int](Iterable.empty)
+
+      (longerMultiSet * emptySet).asIterable.toSeq.sorted
     }
 
-    assertResult("{}") {
-      val singleElement = MultiSet("{1}")
-      (emptySet * singleElement).toString
+    assertResult(Iterable.empty) {
+      val emptySet = MultiSet[Int](Iterable.empty)
+      val singleElement = MultiSet(Iterable(1))
+
+      (emptySet * singleElement).asIterable.toSeq.sorted
     }
 
-    assertResult("{1.0,1.2}") {
-      val first = MultiSet("{1.0,1.2,2.0}")
-      val second = MultiSet("{1.0,1.2,2.2,4.0}")
-      (first * second).toString
+    assertResult(Iterable(1.0,1.2)) {
+      val first = MultiSet(Iterable(1.0,1.2,2.0))
+      val second = MultiSet(Iterable(1.0,1.2,2.2,4.0))
+
+      (first * second).asIterable.toSeq.sorted(Ordering.Double.TotalOrdering)
     }
 
-    assertResult("{2}") {
-      val first = MultiSet("{1,2,3}")
-      val second = MultiSet("{2,4,5}")
-      val third = MultiSet("{2,3,5}")
-      (first * second * third).toString
+    assertResult(Iterable(2)) {
+      val first = MultiSet(Iterable(1,2,3))
+      val second = MultiSet(Iterable(2,4,5))
+      val third = MultiSet(Iterable(2,3,5))
+
+      (first * second * third).asIterable.toSeq.sorted
     }
 
-    assertResult("{2,3}") {
-      val first = MultiSet("{1,2,2,3,3,4,4,4}")
-      val second = MultiSet("{2,3,5,5,5}")
-      (first * second).toString
+    assertResult(Iterable(2,3)) {
+      val first = MultiSet(Iterable(1,2,2,3,3,4,4,4))
+      val second = MultiSet(Iterable(2,3,5,5,5))
+
+      (first * second).asIterable.toSeq.sorted
     }
   }
 
   test("MultiSets can be used in expressions") {
-    assertResult("{a,a,d}") {
-      val first = MultiSet("{a,a,b,c,d,d,e}")
-      val second = MultiSet("{a,b,c,c,c,d,f,g,g}")
-      val third = MultiSet("{a,b,g,h,h}")
-      val fourth = MultiSet("{a,b,b,c,c,c,d,e,g}")
-      (first + second * third - fourth).toString
+    assertResult(Iterable('a','a','d')) {
+      val first = MultiSet(Iterable('a','a','b','c','d','d','e'))
+      val second = MultiSet(Iterable('a','b','c','c','c','d','f','g','g'))
+      val third = MultiSet(Iterable('a','b','g','h','h'))
+      val fourth = MultiSet(Iterable('a','b','b','c','c','c','d','e','g'))
+
+      (first + second * third - fourth).asIterable.toSeq.sorted
     }
 
-    assertResult("{2,3}") {
-      val first = MultiSet("{1,2,3,4,4,4}")
-      val second = MultiSet("{1,4,5,5,5}")
-      val third = MultiSet("{1,1,1,2,3,3,4,5}")
-      val fourth = MultiSet("{1,4,6,7,7,8}")
-      ((first - second) * (third - fourth)).toString
+    assertResult(Iterable(2,3)) {
+      val first = MultiSet(Iterable(1,2,3,4,4,4))
+      val second = MultiSet(Iterable(1,4,5,5,5))
+      val third = MultiSet(Iterable(1,1,1,2,3,3,4,5))
+      val fourth = MultiSet(Iterable(1,4,6,7,7,8))
+
+      ((first - second) * (third - fourth)).asIterable.toSeq.sorted
     }
 
-    assertResult("{d,d,i,o}") {
-      val first = MultiSet("{d,d,d,g,h,i,i,i,o}")
-      val second = MultiSet("{a,b,d,g,i,i}")
-      val third = MultiSet("{d,d,d,h,i,l,o,o}")
-      val fourth = MultiSet("{d,d,i,i,o,o,p,p}")
-      ((first - second) * third * fourth).toString
+    assertResult(Iterable('d','d','i','o')) {
+      val first = MultiSet(Iterable('d','d','d','g','h','i','i','i','o'))
+      val second = MultiSet(Iterable('a','b','d','g','i','i'))
+      val third = MultiSet(Iterable('d','d','d','h','i','l','o','o'))
+      val fourth = MultiSet(Iterable('d','d','i','i','o','o','p','p'))
+
+      ((first - second) * third * fourth).asIterable.toSeq.sorted
     }
   }
 
