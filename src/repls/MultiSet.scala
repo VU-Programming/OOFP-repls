@@ -24,7 +24,7 @@ case class MultiSet[T]() {
 }
 
 object MultiSet {
-    def apply[T](elements: Iterable[T]): MultiSet[T] = {
+    def apply[T](elements: Seq[T]): MultiSet[T] = {
         MultiSet()
     }
 }
