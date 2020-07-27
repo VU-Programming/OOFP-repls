@@ -173,4 +173,68 @@ class IntReplTests extends TestsBase {
             repl.readEval("45 + (r * r) - (2 + 16)")
         }
     }
+
+    test("The IntRepl should be able to simplify (and pretty print) expressions") {
+        val repl = REPLFactory.makeIntREPL()
+
+        assertResult("1") {
+            repl.readEval("@ 1")
+        }
+
+        assertResult("1 + 1") {
+            repl.readEval("@ 1 + 1")
+        }
+
+        assertResult("1") {
+            repl.readEval("@ 0 + 1")
+        }
+
+        assertResult("1") {
+            repl.readEval("@ 1 + 0")
+        }
+
+        assertResult("3") {
+            repl.readEval("@ 1 * 3")
+        }
+
+        assertResult("3") {
+            repl.readEval("@ 3 * 1")
+        }
+
+        assertResult("0") {
+            repl.readEval("@ 3 * 0")
+        }
+
+        assertResult("0") {
+            repl.readEval("@ 0 * 3")
+        }
+
+        assertResult("4 * (3 + 2)") {
+            repl.readEval("@ (4 * 3) + (4 * 2)")
+        }
+
+        assertResult("2 * (64 + 24)") {
+            repl.readEval("@ (64 * 2) + (2 * 24)")
+        }
+
+        assertResult("3 * (89 + 3)") {
+            repl.readEval("@ (3 * 89) + (4 * 3)")
+        }
+
+        assertResult("7 * (34 + 45)") {
+            repl.readEval("@ (34 * 7) + (45 * 7)")
+        }
+
+        assertResult("34 * 5 + 46 * 98") {
+            repl.readEval("@ (34 * 5) + (46 * 98)")
+        }
+
+        assertResult("34 + 4") {
+            repl.readEval("@ 0 * ((23 * 2) + (2 * 9)) + 34 + 4 * 1")
+        }
+
+        assertResult("(3 + 4) * 2") {
+            repl.readEval("@ (3 + (4 * 1)) * 2 + (0 * 9)")
+        }
+    }
 }
