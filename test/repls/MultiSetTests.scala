@@ -1,13 +1,10 @@
 package repls
 
 import org.junit.runner.RunWith
-import org.scalatest.FunSuite
-import org.scalatest.concurrent.{Signaler, TimeLimitedTests}
-import org.scalatest.time.{Seconds, Span}
 import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class MultiSetTests extends FunSuite with TimeLimitedTests {
+class MultiSetTests extends TestsBase {
   test("MultiSets can represent the empty Set") {
     assertResult(Iterable.empty) {
       MultiSet(Iterable.empty).toSeq
@@ -202,7 +199,4 @@ class MultiSetTests extends FunSuite with TimeLimitedTests {
       ((first - second) * third * fourth).toSeq.sorted
     }
   }
-
-  override def timeLimit: Span = Span(1, Seconds)
-  override val defaultTestSignaler: Signaler = ReallyStopSignaler
 }
