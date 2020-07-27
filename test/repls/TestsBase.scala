@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 import org.scalatest.concurrent.{Signaler, TimeLimitedTests}
 import org.scalatest.time.{Seconds, Span}
 
-class TestsBase extends FunSuite with TimeLimitedTests {
+abstract class TestsBase extends FunSuite with TimeLimitedTests {
     override def timeLimit: Span = Span(1, Seconds)
     // this is need to actually stop when the buggy code contains an infinite loop...
     override val defaultTestSignaler: Signaler = ReallyStopSignaler
