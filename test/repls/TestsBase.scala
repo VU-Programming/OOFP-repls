@@ -1,3 +1,4 @@
+// DO NOT MODIFY THIS FILE
 package repls
 
 import org.scalatest.FunSuite

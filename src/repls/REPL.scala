@@ -1,7 +1,7 @@
+// DO NOT MODIFY THIS FILE
 package repls
 
 trait REPL {
-
     val replName : String
 
     def readEval(command : String) : String
