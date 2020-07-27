@@ -1,20 +1,21 @@
 package repls
 
 case class MultiSet[T]() {
+
     def *(that: MultiSet[T]): MultiSet[T] = {
-        MultiSet(Iterable.empty)
+        MultiSet()
     }
 
     def +(that: MultiSet[T]): MultiSet[T] = {
-        MultiSet(Iterable.empty)
+        MultiSet()
     }
 
     def -(that: MultiSet[T]): MultiSet[T] = {
-        MultiSet(Iterable.empty)
+        MultiSet()
     }
 
-    def asIterable: Iterable[T] = {
-        Iterable.empty
+    def toSeq: Seq[T] = {
+        Seq.empty
     }
 
     override def toString: String = {
