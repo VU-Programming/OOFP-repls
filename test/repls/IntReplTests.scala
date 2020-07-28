@@ -214,7 +214,7 @@ class IntReplTests extends TestsBase {
             repl.readEval("@ ( 64 * 2 ) + ( 2 * 24 )")
         }
 
-        assertResult("3 * (89 + 3)") {
+        assertResult("3 * (89 + 4)") {
             repl.readEval("@ ( 3 * 89 ) + ( 4 * 3 )")
         }
 
@@ -226,12 +226,12 @@ class IntReplTests extends TestsBase {
             repl.readEval("@ ( 34 * 5 ) + ( 46 * 98 )")
         }
 
-        assertResult("34 + 4") {
-            repl.readEval("@ 0 * ( ( 23 * 2 ) + ( 2 * 9 ) ) + 34 + 4 * 1")
+        assertResult("2 * (23 + 9) + 34 + 4") {
+            repl.readEval("@ ( ( 23 * 2 ) + ( 2 * 9 ) ) + 34 + 4 * 1")
         }
 
         assertResult("(3 + 4) * 2") {
-            repl.readEval("@ ( 3 + ( 4 * 1 ) ) * 2 + ( 0 * 9 )")
+            repl.readEval("@ ( 3 + ( 4 * 1 ) ) * 2")
         }
     }
 }
