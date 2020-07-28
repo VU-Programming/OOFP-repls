@@ -22,7 +22,7 @@ class IntReplTests extends TestsBase {
         }
 
         assertResult("84") {
-            repl.readEval("(84)")
+            repl.readEval("( 84 )")
         }
     }
 
@@ -42,11 +42,11 @@ class IntReplTests extends TestsBase {
         }
 
         assertResult("50") {
-            repl.readEval("24 + (14 + 12)")
+            repl.readEval("24 + ( 14 + 12 )")
         }
 
         assertResult("661") {
-            repl.readEval("(12 + 1) + (45 + 547 + 56)")
+            repl.readEval("( 12 + 1 ) + ( 45 + 547 + 56 )")
         }
     }
 
@@ -62,23 +62,19 @@ class IntReplTests extends TestsBase {
         }
 
         assertResult("26304") {
-            repl.readEval("32478 - 3478 - 2347 - 4 - 345")
-        }
-
-        assertResult("-1") {
-            repl.readEval("-1")
+            repl.readEval("( ( ( 32478 - 3478 ) - 2347 ) - 4 ) - 345")
         }
 
         assertResult("-29") {
-            repl.readEval("(-29)")
+            repl.readEval("( 0 - 29 )")
         }
 
-        assertResult("-694") {
-            repl.readEval("24 - (75 - 643)")
+        assertResult("592") {
+            repl.readEval("24 - ( 75 - 643 )")
         }
 
-        assertResult("-1533") {
-            repl.readEval("(12 - 45) - (1245 - 255)")
+        assertResult("-1023") {
+            repl.readEval("( 12 - 45 ) - ( 1245 - 255 )")
         }
     }
 
@@ -98,11 +94,11 @@ class IntReplTests extends TestsBase {
         }
 
         assertResult("2160") {
-            repl.readEval("45 * (12 * 4)")
+            repl.readEval("45 * ( 12 * 4 )")
         }
 
         assertResult("181056") {
-            repl.readEval("(23 * 123) * (2 * 32)")
+            repl.readEval("( 23 * 123 ) * ( 2 * 32 )")
         }
     }
 
@@ -122,23 +118,23 @@ class IntReplTests extends TestsBase {
         }
 
         assertResult("612") {
-            repl.readEval("102 * (4 + 2)")
+            repl.readEval("102 * ( 4 + 2 )")
         }
 
-        assertResult("87") {
-            repl.readEval("9 - 45 + 123")
+        assertResult("-159") {
+            repl.readEval("9 - ( 45 + 123 )")
         }
 
         assertResult("543253") {
-            repl.readEval("5 * (45 + 1247 * 87) + 583")
+            repl.readEval("5 * ( 45 + 1247 * 87 ) + 583")
         }
 
-        assertResult("-85") {
-            repl.readEval("(43 - 35 * 2 + (32 - (45) * 2))")
+        assertResult("31") {
+            repl.readEval("( 43 - ( 35 * 2 + ( 32 - ( 45 ) * 2 ) ) )")
         }
 
         assertResult("-13334") {
-            repl.readEval("35 + (35 * (54 - 465 + (35) - 3) - (43 + 61)) * 1")
+            repl.readEval("35 + ( 35 * ( ( 54 - 465 ) + ( ( 35 ) - 3 ) ) - ( 43 + 61 ) ) * 1")
         }
     }
 
@@ -160,7 +156,7 @@ class IntReplTests extends TestsBase {
 
         assertResult("p = 62") {
             repl.readEval("p = 12")
-            repl.readEval("p = (1 + p * 2) * 2 + p")
+            repl.readEval("p = ( 1 + p * 2 ) * 2 + p")
         }
 
         assertResult("17") {
@@ -168,10 +164,10 @@ class IntReplTests extends TestsBase {
             repl.readEval("5 + q")
         }
 
-        assertResult("31388") {
+        assertResult("31356") {
             repl.readEval("r = 4 * 12")
-            repl.readEval("r = r * 2 - 45 + 126")
-            repl.readEval("45 + (r * r) - (2 + 16)")
+            repl.readEval("r = ( r * 2 - 45 ) + 126")
+            repl.readEval("45 + ( r * r ) - ( 2 + 16 )")
         }
     }
 
@@ -211,31 +207,31 @@ class IntReplTests extends TestsBase {
         }
 
         assertResult("4 * (3 + 2)") {
-            repl.readEval("@ (4 * 3) + (4 * 2)")
+            repl.readEval("@ ( 4 * 3 ) + ( 4 * 2 )")
         }
 
         assertResult("2 * (64 + 24)") {
-            repl.readEval("@ (64 * 2) + (2 * 24)")
+            repl.readEval("@ ( 64 * 2 ) + ( 2 * 24 )")
         }
 
         assertResult("3 * (89 + 3)") {
-            repl.readEval("@ (3 * 89) + (4 * 3)")
+            repl.readEval("@ ( 3 * 89 ) + ( 4 * 3 )")
         }
 
         assertResult("7 * (34 + 45)") {
-            repl.readEval("@ (34 * 7) + (45 * 7)")
+            repl.readEval("@ ( 34 * 7 ) + ( 45 * 7 )")
         }
 
         assertResult("34 * 5 + 46 * 98") {
-            repl.readEval("@ (34 * 5) + (46 * 98)")
+            repl.readEval("@ ( 34 * 5 ) + ( 46 * 98 )")
         }
 
         assertResult("34 + 4") {
-            repl.readEval("@ 0 * ((23 * 2) + (2 * 9)) + 34 + 4 * 1")
+            repl.readEval("@ 0 * ( ( 23 * 2 ) + ( 2 * 9 ) ) + 34 + 4 * 1")
         }
 
         assertResult("(3 + 4) * 2") {
-            repl.readEval("@ (3 + (4 * 1)) * 2 + (0 * 9)")
+            repl.readEval("@ ( 3 + ( 4 * 1 ) ) * 2 + ( 0 * 9 )")
         }
     }
 }
