@@ -194,10 +194,6 @@ class MultiSetReplTests extends TestsBase {
             repl.readEval("@ {} * {a}")
         }
 
-//        assertResult("{a}") {
-//            repl.readEval("@ {a} * {a}")
-//        }
-
         assertResult("{a,b,c} * ({b,c,d} + {e,f,g})") {
             repl.readEval("@ ( {a,b,c} * {b,c,d} ) + ( {a,b,c} * {e,f,g} )")
         }
@@ -217,13 +213,5 @@ class MultiSetReplTests extends TestsBase {
         assertResult("{b,b,m,n} * {b,c,v} + {b,h,n} * {g,u,y}") {
             repl.readEval("@ ( {b,b,n,m} * {c,v,b} ) + ( {b,n,h} * {g,y,u} )")
         }
-
-//        assertResult("{b} + {a,b,n}") {
-//            repl.readEval("@ {} * ( ( {b,n,g} * {f,g} ) + ( {b} * {r,t,f} ) ) + {b} + {a,n,b} * {a,n,b}")
-//        }
-
-//        assertResult("({g,h} + {b,n,n}) * {a,a,e,r}") {
-//            repl.readEval("@ ( {g,h} + ( {b,n,n} * {b,n,n} ) ) * {a,a,e,r} + ( {u,u,i.p} * {} )")
-//        }
     }
 }
