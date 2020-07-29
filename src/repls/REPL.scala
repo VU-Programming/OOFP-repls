@@ -8,7 +8,7 @@ trait REPL {
 
     def run() : Unit = {
         while(true) {
-            println("repls." + replName + ">")
+            println(s"repls.$replName>")
             val s = scala.io.StdIn.readLine().trim
 
             if(s == "exit") return
