@@ -2,9 +2,9 @@
 
 In this exercise you will be making two calculator [REPLs](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop). The first of these is a regular calculator dealing with integers, the second operates on [MultiSets](#multisets). A lot of the techniques discussed in this course are useful to enable code reuse and this assignment gives you ample opportunity to employ these techniques since both REPLs have very similar functionality.
  
-The REPLs have three types of commands:
+The REPLs have three types of command:
 
-- **Expression Evaluation:** If the input is an expression (for example: `1 + n * 3 + 5`) then the outcome should be its result (18 in this example, assuming n = 4)
+- **Expression Evaluation:** If the input is an expression (for example: `1 + n * 3 + 5`) then the output should be its result (18 in this example, assuming n = 4)
 - **Variable Assignment:** If the input is an assignment (for example: `n = 18 * m * 2 + 5)`, the REPL should store the binding of that variable and print the new binding (in this case: `n = 77`, assuming m = 2).
 - **Expression Simplification:** If the input starts with an "@" then the REPL should simplify the expression after the "@" according to the [rules below](#simplification-rules). For example, `@ (n * 0) + (n * 2) + (n * 3) + a * b` should give `n * (2 + 3) + a * b`
 
