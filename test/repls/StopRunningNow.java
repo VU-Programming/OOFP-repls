@@ -1,3 +1,4 @@
+// DO NOT MODIFY THIS FILE
 package repls;
 /* We are using Java here purely such that we can use the
    @SuppressWarnings("deprecation") annotation to
