@@ -3,9 +3,10 @@ package repls
 
 import org.junit.runner.RunWith
 import org.scalatestplus.junit.JUnitRunner
+import repls.infrastructure.TestBase
 
 @RunWith(classOf[JUnitRunner])
-class MultiSetReplTests extends TestsBase {
+class MultiSetReplTests extends TestBase {
     test("The MultiSetRepl should echo resolved expressions") {
         val repl = REPLFactory.makeMultiSetREPL()
 

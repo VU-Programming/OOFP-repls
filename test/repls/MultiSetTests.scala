@@ -3,9 +3,10 @@ package repls
 
 import org.junit.runner.RunWith
 import org.scalatestplus.junit.JUnitRunner
+import repls.infrastructure.TestBase
 
 @RunWith(classOf[JUnitRunner])
-class MultiSetTests extends TestsBase {
+class MultiSetTests extends TestBase {
     test("MultiSets can represent the empty Set") {
         assertResult(Seq.empty) {
             MultiSet(Seq.empty).toSeq
