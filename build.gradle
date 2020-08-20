@@ -1,4 +1,4 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.codehaus.groovy.runtime.GStringImpl
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
@@ -9,12 +9,12 @@ plugins {
 
 test {
     useJUnitPlatform()
-
+    exclude "**/AllTests.class"
 }
 
 ext {
     scalaMajorVersion = '2.13'
-    scalaVersion = "${scalaMajorVersion}.0"
+    scalaVersion = "${scalaMajorVersion}.0" as GStringImpl
 }
 
 
@@ -68,6 +68,13 @@ task spec(dependsOn: ['testClasses'], type: JavaExec) {
   classpath = sourceSets.test.runtimeClasspath
 }
 
-
+task fraction(type: JavaExec, dependsOn: classes) {
+    // To make sure you can always run this task
+    outputs.upToDateWhen { false }
+    main = 'repls.infrastructure.ReportFraction'
+    classpath sourceSets.test.runtimeClasspath
+    classpath sourceSets.main.runtimeClasspath
+    classpath configurations.runtime
+}
 
 
