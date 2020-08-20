@@ -6,17 +6,15 @@ plugins {
     id 'idea'
 }
 
-
 test {
     useJUnitPlatform()
-    exclude "**/AllTests.class"
+    include "**/AllTests.class"
 }
 
 ext {
     scalaMajorVersion = '2.13'
     scalaVersion = "${scalaMajorVersion}.0" as GStringImpl
 }
-
 
 repositories {
     flatDir {
@@ -52,7 +50,6 @@ task zip(type: Zip) {
     destinationDir(file("$projectDir"))
 }
 
-
 tasks.withType(Test) {
     group = "verification"
     testLogging {
@@ -76,5 +73,3 @@ task fraction(type: JavaExec, dependsOn: classes) {
     classpath sourceSets.main.runtimeClasspath
     classpath configurations.runtime
 }
-
-
