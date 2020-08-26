@@ -6,7 +6,19 @@ The REPLs have three types of command:
 
 - **Expression Evaluation:** If the input is an expression (for example: `1 + 4 * 3 + 5`) then the output should be its result (18 in this example)
 - **Variable Assignment:** If the input is an assignment (for example: `n = 18 * m * 2 + 5`, the REPL should store the binding of that variable and print the new binding (in this case: `n = 77`, assuming m = 2).
-- **Expression Simplification:** If the input starts with an "@" then the REPL should simplify the expression after the "@" according to the [rules below](#simplification-rules). For example, `@ ( ( n * 2 ) + ( n * 3 ) ) + a * b` should give `n * 5 + a * b`. Notice that we compute the `n * (2 + 3) = n * 5`, you should do the same. 
+- **Expression Simplification:** If the input starts with an "@" then the REPL should simplify the expression after the "@" according to the [rules below](#simplification-rules). For example, `@ ( ( n * 2 ) + ( n * 3 ) ) + a * b` should give `n * 5 + a * b`. Notice that we compute the `n * (2 + 3) = n * 5`, you should do the same. Notice that you do not have to simplify `5 * n * m * 3` to `15 * n * m`, but its bonus points if you do. 
+
+Note that evaluation and simplification only differ when dealing with unbound variables. Evaluating unbound variables give an error, but they can be simplified. Bound variables should be treated as their corresponding value both when simplifying and evaluating. For example:
+```
+n = 18 + 2
+> n = 20
+n * n 
+> 400
+@ ( n * 2) + m * 1
+> 40 + m
+( n * 2 ) + m * 1
+Unkown variable: m
+```
 
 ## MultiSets
 A multiset is like a set, but allows for duplicates. The number of instances of an element in a multiset is called its *multiplicity*. For example, in the multiset `{ a, a, a, b, a }`, `a` has a multiplicity of 4, and `b` has a multiplicity of 1. The multiplicity is always an integer and never negative. The multiplicity of an element which is not in the multiset is 0.
