@@ -7,212 +7,393 @@ import repls.infrastructure.TestBase
 
 @RunWith(classOf[JUnitRunner])
 class MultiSetReplTests extends TestBase {
-    test("The MultiSetRepl should echo resolved expressions") {
+
+    /*
+    Basic parsing and echoing
+     */
+    test("Echo simple") {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        assertResult("{a}") {
-            repl.readEval("{a}")
-        }
+        val result = repl.readEval("{a,b,c}")
+        val expected = "{a,b,c}"
 
-        assertResult("{a,a}") {
-            repl.readEval("{a,a}")
-        }
-
-        assertResult("{a,b,c}") {
-            repl.readEval("{a,b,c}")
-        }
-
-        assertResult("{a,b}") {
-            repl.readEval("( {a,b} )")
-        }
+        assert(result == expected)
     }
 
-    test("The MultiSetRepl should evaluate summations") {
+    test("Echo brackets") {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        assertResult("{a,a,a,b}") {
-            repl.readEval("{a,a} + {a,b}")
-        }
+        val result = repl.readEval("( {a,b} )")
+        val expected = "{a,b}"
 
-        assertResult("{a,a,b,b,b,b,c,c}") {
-            repl.readEval("{b,c} + {a,b,b} + {a,b,c}")
-        }
-
-        assertResult("{a,a,b,b,b,b,b,b,h,h,i,i,u,u,v,y,y,y,y}") {
-            repl.readEval("{a,b,y,y} + {u,u,i} + {i,y,b,b,h} + {b,b,h,y} + {a,b,v}")
-        }
-
-        assertResult("{a,a,a,b,b,b,c,c,c,c}") {
-            repl.readEval("{a,b,c} + ( {a,a} + {b,b,c,c,c} )")
-        }
-
-        assertResult("{a,a,b,b,b,c,f,f,g,g,h,i,r}") {
-            repl.readEval("( {a,b} + {b,c,f} ) + ( {a,b} + {r,f,g} + {g,h,i} )")
-        }
+        assert(result == expected)
     }
 
-    test("The MultiSetRepl should evaluate subtractions") {
+
+
+    /*
+    Evaluate summations
+     */
+    test("Evaluate summation simple") {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        assertResult("{}") {
-            repl.readEval("{a} - {a}")
-        }
+        val result = repl.readEval("{b,c} + {a,b,b} + {a,b,c}")
+        val expected = "{a,a,b,b,b,b,c,c}"
 
-        assertResult("{}") {
-            repl.readEval("{a} - {a,b}")
-        }
-
-        assertResult("{c}") {
-            repl.readEval("( ( {a,b,c} - {a} ) - {a,b} ) - {m,n}")
-        }
-
-        assertResult("{a,e}") {
-            repl.readEval("{a,e,e,e,e,d} - ( {b,d,e,e,e} - {a,b,c} )")
-        }
-
-        assertResult("{a,t}") {
-            repl.readEval("( {a,a,a,a,t,g} - {g,k,k,k,m,l} ) - ( {k,g,a,a,a} - {k,l,m} )")
-        }
+        assert(result == expected)
     }
 
-    test("The MultiSetRepl should evaluate intersections") {
+    test("Evaluate summation brackets") {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        assertResult("{a}") {
-            repl.readEval("{a,a} * {a}")
-        }
+        val result = repl.readEval("( {a,b} + {b,c,f} ) + ( {a,b} + {r,f,g} + {g,h,i} )")
+        val expected = "{a,a,b,b,b,c,f,f,g,g,h,i,r}"
 
-        assertResult("{a,b}") {
-            repl.readEval("{a,a,b,c,c,e} * {a,b,f,f,g}")
-        }
-
-        assertResult("{a}") {
-            repl.readEval("{a,b,c} * {a,a,f,f} * {f,f,f,r,t,a} * {f,n,a}")
-        }
-
-        assertResult("{g}") {
-            repl.readEval("{a,g,c} * ( {d,e,g,g} * {g,g,h,d} )")
-        }
-
-        assertResult("{r}") {
-            repl.readEval("( {g,g,r,r,t} * {r,t,e,d} ) * ( {y,y,u,d,r} * {y,u,r,d} )")
-        }
+        assert(result == expected)
     }
 
-    test("The MultiSetRepl should evaluate expressions") {
+
+    /*
+    Evaluating with subtraction
+     */
+    test("Evaluate subtraction simple") {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        assertResult("{a,a,b,d,d}") {
-            repl.readEval("{a,a,b,d} + {r,r,t,d} * {i,j,k,d}")
-        }
+        val result = repl.readEval("{a} - {a,b}")
+        val expected = "{}"
 
-        assertResult("{r,r,s,v,x,x}") {
-            repl.readEval("{s,x,x,v} * {z,f,x,x,x,v} + {r,r,s}")
-        }
-
-        assertResult("{f,f,h,h,j,r}") {
-            repl.readEval("{j,h,h,f} + {f,r,r,t} * {e,e,r,f}")
-        }
-
-        assertResult("{q,v,w,w}") {
-            repl.readEval("{w,w,q,v} * ( {w,w,q,v} + {l,l,n} )")
-        }
-
-        assertResult("{c,f,x,x,z}") {
-            repl.readEval("( {c,c,x,z} - {c,z,s} ) + {f,x,z}")
-        }
-
-        assertResult("{r,r,u,w,y}") {
-            repl.readEval("{r,w,w,y} * ( {r,r,t} + {q,q,w} * {t,t,w} ) + {y,u,r}")
-        }
-
-        assertResult("{f,h,t,t,y}") {
-            repl.readEval("( ( {h,h,r} - {h,r,f,g} * {h,r,e,r} ) + ( {t,t,t,y,f} - ( {t,t,y} ) * {t,e,e,r} ) )")
-        }
-
-        assertResult("{e,f}") {
-            repl.readEval("{e} + ( {f,f,g,t} * ( ( {f,f,r,t} - {a,a,n,d} ) + ( {f,g} ) - {r,t,d,d} ) - ( {f,t,y} + {y,y,r} ) ) * {f,y,y,e}")
-        }
+        assert(result == expected)
     }
 
-    test("The MultiSetRepl should be able to assign and use variables") {
+    test("Evaluate subtraction brackets") {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        assertResult("n = {a}") {
-            repl.readEval("n = {a}")
-        }
+        val result = repl.readEval("( ( {a,b,c} - {a} ) - {a,b} ) - {m,n}")
+        val expected = "{c}"
 
-        assertResult("n = {a,b,b,n}") {
-            repl.readEval("n = {a,b,n} + {b,n,n} * {r,r,t,b}")
-        }
-
-        assertResult("m = {a,b,b,b,c,m}") {
-            repl.readEval("m = {a,b,c}")
-            repl.readEval("m = m + {b,b,m}")
-        }
-
-        assertResult("p = {g,g,g,g,h,n,y}") {
-            repl.readEval("p = {g,g,y}")
-            repl.readEval("p = ( {g,h,h,n} + p * {g,g,g,y,y,i} ) * {g,g,h,n,p} + p")
-        }
-
-        assertResult("{n,r,r,t,y,y}") {
-            repl.readEval("q = {y,t,r}")
-            repl.readEval("{r,y,n} + q")
-        }
-
-        assertResult("{g,g}") {
-            repl.readEval("r = {g,g,g,r,r,c} * {c,c,c,g,g,d,d,e}")
-            repl.readEval("r = ( r * {g,c,c} - {d,d,d,c} ) + {g,h,y}")
-            repl.readEval("{} + ( r * r ) - ( {h,n,m} + {y,m,m,r} )")
-        }
+        assert(result == expected)
     }
 
-    test("The MultiSetRepl should be able to simplify (and pretty print) expressions") {
+    /*
+    Evaluating intersections
+     */
+    test("Evaluate intersection simple") {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        assertResult("{a}") {
-            repl.readEval("@ {a}")
-        }
+        val result = repl.readEval("{a,a,b,c,c,e} * {a,b,f,f,g}")
+        val expected = "{a,b}"
 
-        assertResult("{a} + {b}") {
-            repl.readEval("@ {a} + {b}")
-        }
+        assert(result == expected)
+    }
 
-        assertResult("{a}") {
-            repl.readEval("@ {a} + {}")
-        }
+    test("Evaluate intersection brackets") {
+        val repl = REPLFactory.makeMultiSetREPL()
 
-        assertResult("{a}") {
-            repl.readEval("@ {} + {a}")
-        }
+        val result = repl.readEval("( {g,g,r,r,t} * {r,t,e,d} ) * ( {y,y,u,d,r} * {y,u,r,d} )")
+        val expected = "{r}"
 
-        assertResult("{}") {
-            repl.readEval("@ {a} * {}")
-        }
+        assert(result == expected)
+    }
 
-        assertResult("{}") {
-            repl.readEval("@ {} * {a}")
-        }
+    /*
+     Evaluation expressions with different operations
+      */
+    test("Evaluate expressions simple") {
+        val repl = REPLFactory.makeMultiSetREPL()
 
-        assertResult("{a,b,c} * ({b,c,d} + {e,f,g})") {
-            repl.readEval("@ ( {a,b,c} * {b,c,d} ) + ( {a,b,c} * {e,f,g} )")
-        }
+        val result = repl.readEval("{a,a,b,d} + {r,r,t,d} * {i,j,k,d}")
+        val expected = "{a,a,b,d,d}"
 
-        assertResult("{b,b,b} * ({g,g,h} + {h,h,i,j})") {
-            repl.readEval("@ ( {g,g,h} * {b,b,b} ) + ( {b,b,b} * {h,h,j,i} )")
-        }
+        assert(result == expected)
+    }
 
-        assertResult("{b} * ({j,j,j} + {f,g,j})") {
-            repl.readEval("@ ( {b} * {j,j,j} ) + ( {f,g,j} * {b} )")
-        }
+    test("Evaluate expressions brackets") {
+        val repl = REPLFactory.makeMultiSetREPL()
 
-        assertResult("{h,j} * ({f,g,g} + {g,h,h,i})") {
-            repl.readEval("@ ( {f,g,g} * {h,j} ) + ( {g,h,h,i} * {h,j} )")
-        }
+        val result = repl.readEval("{r,w,w,y} * ( {r,r,t} + {q,q,w} * {t,t,w} ) + {y,u,r}")
+        val expected = "{r,r,u,w,y}"
 
-        assertResult("{b,b,m,n} * {b,c,v} + {b,h,n} * {g,u,y}") {
-            repl.readEval("@ ( {b,b,n,m} * {c,v,b} ) + ( {b,n,h} * {g,y,u} )")
-        }
+        assert(result == expected)
+    }
+
+    test("Evaluate expressions nested brackets") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("( ( {h,h,r} - {h,r,f,g} * {h,r,e,r} ) + ( {t,t,t,y,f} - ( {t,t,y} ) * {t,e,e,r} ) )")
+        val expected = "{f,h,t,t,y}"
+
+        assert(result == expected)
+    }
+
+    test("Evaluate expressions advanced brackets") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("{e} + ( {f,f,g,t} * ( ( {f,f,r,t} - {a,a,n,d} ) + ( {f,g} ) - {r,t,d,d} ) - ( {f,t,y} + {y,y,r} ) ) * {f,y,y,e}")
+        val expected = "{e,f}"
+
+        assert(result == expected)
+    }
+
+
+    /*
+    Assigning variables
+     */
+    test("Assign variables simple") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("n = {a}")
+        val expected = "n = {a}"
+
+        assert(result == expected)
+    }
+
+    test("Assign variables and evaluate") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("n = {a,b,n} + {b,n,n} * {r,r,t,b}")
+        val expected = "n = {a,b,b,n}"
+
+        assert(result == expected)
+    }
+
+    test("Assign variables reuse") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        repl.readEval("n = {a,b,c}")
+        val result = repl.readEval("m = n + {b,b,m}")
+        val expected = "m = {a,b,b,b,c,m}"
+
+
+        assert(result == expected)
+    }
+
+    test("Assign variables reassign") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        repl.readEval("p = {g,g,y}")
+        val result = repl.readEval("p = ( {g,h,h,n} + p * {g,g,g,y,y,i} ) * {g,g,h,n,p} + p")
+        val expected = "p = {g,g,g,g,h,n,y}"
+
+        assert(result == expected)
+    }
+
+    test("Assign variables evaluate") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        repl.readEval("q = {y,t,r}")
+        val result = repl.readEval("{r,y,n} + q")
+        val expected = "{n,r,r,t,y,y}"
+
+        assert(result == expected)
+    }
+
+    test("Assign variables advanced") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        repl.readEval("r = {g,g,g,r,r,c} * {c,c,c,g,g,d,d,e}")
+        repl.readEval("r = ( r * {g,c,c} - {d,d,d,c} ) + {g,h,y}")
+        val result = repl.readEval("{} + ( r * r ) - ( {h,n,m} + {y,m,m,r} )")
+        val expected = "{g,g}"
+
+        assert(result == expected)
+    }
+
+
+    /*
+    Simplification with the basic rules and constant sets
+     */
+
+    test("Simplify simple") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ {a} + {b}")
+        val expected = "{a,b}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify empty set left") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ {} + {a,b}")
+        val expected = "{a,b}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify empty set right") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ {a} + {}")
+        val expected = "{a}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify intersection by itself") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ {a} * {a}")
+        val expected = "{a}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify intersection by empty set left") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ {} * {a}")
+        val expected = "{}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify intersection by empty set right") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ {a} * {}")
+        val expected = "{}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify brackets") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ ( {a,b,c} * {b,c,d} ) + ( {a,b,c} * {e,f,g} )")
+        val expected = "{b,c}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify leading empty set") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ {} * ( ( {b,n,g} * {f,g} ) + ( {b} * {r,t,f} ) ) + {b} + {a,n,b} * {a,n,b}")
+        val expected = "{a,b,b,n}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify trailing empty set") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ ( {g,h} + ( {b,n,n} * {b,n,n} ) ) * {a,a,e,r} + ( {u,u,i.p} * {} )")
+        val expected = "{}"
+
+        assert(result == expected)
+    }
+
+
+    /*
+    Simplification with abstract variables
+     */
+    test("Simplify abstract simple") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ a + {a,b,b,c}")
+        val expected = "a + {a,b,b,c}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify unneeded empty set on abstract left") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ {} + a")
+        val expected = "a"
+
+        assert(result == expected)
+    }
+
+    test("Simplify unneeded empty set on abstract right") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ a + {}")
+        val expected = "a"
+
+        assert(result == expected)
+    }
+
+    test("Simplify multiply by empty set on abstract left") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ {} * a")
+        val expected = "{}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify multiply by empty set on abstract right") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ a * {}")
+        val expected = "{}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify intersection by its abstract self") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ a * a")
+        val expected = "a"
+
+        assert(result == expected)
+    }
+
+    test("Simplify abstract brackets") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ a + ( b * b )")
+        val expected = "a + b"
+
+        assert(result == expected)
+    }
+
+    test("Simplify abstract advanced") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ a + ( ( b * c ) * ( b * c ) )")
+        val expected = "a + b * c"
+
+        assert(result == expected)
+    }
+
+    /*
+    Simplification with assigned variables
+     */
+    test("Simplify with assigned variables") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        repl.readEval("a = {a,b,b}")
+        val result = repl.readEval("@ a")
+        val expected = "{a,b,b}"
+
+        assert(result == expected)
+    }
+
+
+    test("Simplify with assigned variables brackets") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        repl.readEval("a = {a,b,c,c,d}")
+        val result = repl.readEval("@ ( {} + ( {b,c,e} * a ) ) * b")
+        val expected = "{b,c} * b"
+
+        assert(result == expected)
+    }
+
+    test("Simplify with assigned variables advanced") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        repl.readEval("a = {a,c}")
+        repl.readEval("b = a * {a,b}")
+        repl.readEval("c = b + ( a * {c,b} )")
+
+        val result = repl.readEval("@ ( ( ( a * b ) + ( {a} * b ) ) + c ) + d")
+        val expected = "{a,a,a,c} + d"
+
+        assert(result == expected)
     }
 }

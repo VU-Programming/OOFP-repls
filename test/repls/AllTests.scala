@@ -1,3 +1,4 @@
+// DO NOT MODIFY THIS FILE
 package repls
 
 import org.junit.runner.RunWith
@@ -10,7 +11,8 @@ import repls.infrastructure.ScoreCounter
 class AllTests extends Suites(
     new IntReplTests,
     new MultiSetReplTests,
-    new MultiSetTests
+    new MultiSetTests,
+    new ReplTests
 ) {
 
     override def run(testName: Option[String], args: Args): Status = {
