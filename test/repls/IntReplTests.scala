@@ -49,7 +49,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Evaluate addition negative numbers") {
+    test("Evaluate addition negative numbers", weight = 2) {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("10 + -11")
@@ -88,7 +88,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Evaluate subtraction two negatives make positives") {
+    test("Evaluate subtraction two negatives make positives", weight = 2) {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("3 - -5")
@@ -118,7 +118,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Evaluate multiplication negative") {
+    test("Evaluate multiplication negative", weight = 2) {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("( -10 * 64 ) * ( 2 * 32 )")
@@ -148,7 +148,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Evaluate Expressions nested brackets") {
+    test("Evaluate Expressions nested brackets", weight = 5) {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("( 43 - ( 35 * 2 + ( 32 - ( 45 ) * 2 ) ) )")
@@ -157,7 +157,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Evaluate Expressions advanced brackets") {
+    test("Evaluate Expressions advanced brackets", weight = 5) {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("35 + ( 35 * ( ( 54 - 465 ) + ( ( 35 ) - 3 ) ) - ( 43 + 61 ) ) * 1")
@@ -197,7 +197,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Assign variables negative numbers") {
+    test("Assign variables negative numbers", weight = 2) {
         val repl = REPLFactory.makeIntREPL()
 
         repl.readEval("n = -16")
@@ -227,7 +227,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Assign variables advanced") {
+    test("Assign variables advanced", weight = 5) {
         val repl = REPLFactory.makeIntREPL()
 
         repl.readEval("r = 4 * 12")
@@ -324,7 +324,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Simplify trailing 0") {
+    test("Simplify trailing 0", weight = 2) {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("@ ( 34 + 6 ) * 2  * 0")
@@ -333,7 +333,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Simplify leading 0") {
+    test("Simplify leading 0", weight = 2) {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("@ 0 * ( 34 + 6 )")
@@ -341,7 +341,7 @@ class IntReplTests extends TestBase {
 
         assert(result == expected)
     }
-    test("Simplify advanced") {
+    test("Simplify advanced", weight = 5) {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("@ ( ( 23 * 2 ) + ( 2 * 9 ) ) + 34 + 4 * 1")
@@ -425,7 +425,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Simplify abstract advanced") {
+    test("Simplify abstract advanced", weight = 5) {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("@ a + ( ( b * c ) + ( c * d ) )")
@@ -448,7 +448,7 @@ class IntReplTests extends TestBase {
     }
 
 
-    test("Simplify with assigned variables brackets") {
+    test("Simplify with assigned variables brackets", weight = 2) {
         val repl = REPLFactory.makeIntREPL()
 
         repl.readEval("a = -10")
@@ -458,7 +458,7 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Simplify with assigned variables advanced") {
+    test("Simplify with assigned variables advanced", weight = 5) {
         val repl = REPLFactory.makeIntREPL()
 
         repl.readEval("a = 3")

@@ -116,7 +116,7 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Evaluate expressions nested brackets") {
+    test("Evaluate expressions nested brackets", weight = 5) {
         val repl = REPLFactory.makeMultiSetREPL()
 
         val result = repl.readEval("( ( {h,h,r} - {h,r,f,g} * {h,r,e,r} ) + ( {t,t,t,y,f} - ( {t,t,y} ) * {t,e,e,r} ) )")
@@ -125,7 +125,7 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Evaluate expressions advanced brackets") {
+    test("Evaluate expressions advanced brackets", weight = 5) {
         val repl = REPLFactory.makeMultiSetREPL()
 
         val result = repl.readEval("{e} + ( {f,f,g,t} * ( ( {f,f,r,t} - {a,a,n,d} ) + ( {f,g} ) - {r,t,d,d} ) - ( {f,t,y} + {y,y,r} ) ) * {f,y,y,e}")
@@ -187,7 +187,7 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Assign variables advanced") {
+    test("Assign variables advanced", weight = 5) {
         val repl = REPLFactory.makeMultiSetREPL()
 
         repl.readEval("r = {g,g,g,r,r,c} * {c,c,c,g,g,d,d,e}")
@@ -266,7 +266,7 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Simplify leading empty set") {
+    test("Simplify leading empty set", weight = 2) {
         val repl = REPLFactory.makeMultiSetREPL()
 
         val result = repl.readEval("@ {} * ( ( {b,n,g} * {f,g} ) + ( {b} * {r,t,f} ) ) + {b} + {a,n,b} * {a,n,b}")
@@ -275,7 +275,7 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Simplify trailing empty set") {
+    test("Simplify trailing empty set", weight = 2) {
         val repl = REPLFactory.makeMultiSetREPL()
 
         val result = repl.readEval("@ ( {g,h} + ( {b,n,n} * {b,n,n} ) ) * {a,a,e,r} + ( {u,u,i.p} * {} )")
@@ -351,7 +351,7 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Simplify abstract advanced") {
+    test("Simplify abstract advanced", weight = 5) {
         val repl = REPLFactory.makeMultiSetREPL()
 
         val result = repl.readEval("@ a + ( ( b * c ) * ( b * c ) )")
@@ -374,7 +374,7 @@ class MultiSetReplTests extends TestBase {
     }
 
 
-    test("Simplify with assigned variables brackets") {
+    test("Simplify with assigned variables brackets", weight = 2) {
         val repl = REPLFactory.makeMultiSetREPL()
 
         repl.readEval("a = {a,b,c,c,d}")
@@ -384,7 +384,7 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Simplify with assigned variables advanced") {
+    test("Simplify with assigned variables advanced", weight = 5) {
         val repl = REPLFactory.makeMultiSetREPL()
 
         repl.readEval("a = {a,c}")

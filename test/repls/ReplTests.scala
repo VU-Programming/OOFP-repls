@@ -10,7 +10,7 @@ class ReplTests extends TestBase {
   /*
   IntRepl errors
    */
-  test("Invalid expression") {
+  test("Invalid expression", weight = 2) {
     val repl = REPLFactory.makeIntREPL()
 
     assertThrows[NoSuchElementException] {
@@ -59,7 +59,7 @@ class ReplTests extends TestBase {
     }
   }
 
-  test("Invalid simplification") {
+  test("Invalid simplification", weight = 2) {
     val repl = REPLFactory.makeIntREPL()
 
     assertThrows[NoSuchElementException] {
@@ -86,7 +86,7 @@ class ReplTests extends TestBase {
   /*
   MultisetRepl errors
   */
-  test("Invalid multiset") {
+  test("Invalid multiset", weight = 2) {
     val repl = REPLFactory.makeMultiSetREPL()
 
     assertThrows[Error] {
@@ -94,7 +94,7 @@ class ReplTests extends TestBase {
     }
   }
 
-  test("Invalid multiset expression") {
+  test("Invalid multiset expression", weight = 2) {
     val repl = REPLFactory.makeMultiSetREPL()
 
     assertThrows[NoSuchElementException] {
@@ -139,7 +139,7 @@ class ReplTests extends TestBase {
   /*
   Common errors
    */
-  test("No valid variable name") {
+  test("No valid variable name", weight = 4) {
     val repl = REPLFactory.makeIntREPL()
 
     assertThrows[Error] {
@@ -163,7 +163,7 @@ class ReplTests extends TestBase {
     }
   }
 
-  test("Not known command") {
+  test("Not known command", weight = 2) {
     val repl = REPLFactory.makeIntREPL()
 
     assertThrows[Error] {
@@ -171,7 +171,7 @@ class ReplTests extends TestBase {
     }
   }
 
-  test("Assignment without value") {
+  test("Assignment without value", weight = 2) {
     val repl = REPLFactory.makeIntREPL()
 
     assertThrows[Error] {
@@ -179,7 +179,7 @@ class ReplTests extends TestBase {
     }
   }
 
-  test("Simplification without expression") {
+  test("Simplification without expression", weight = 2) {
     val repl = REPLFactory.makeMultiSetREPL()
 
     assertThrows[Error] {

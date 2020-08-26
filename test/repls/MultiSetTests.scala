@@ -177,7 +177,7 @@ class MultiSetTests extends TestBase {
     /*
     Expressions
      */
-    test("Multiset expressions numeric") {
+    test("Multiset expressions numeric", weight = 5) {
         assertResult(Seq(2,3)) {
             val first = MultiSet(Seq(1,2,3,4,4,4))
             val second = MultiSet(Seq(1,4,5,5,5))
@@ -188,7 +188,7 @@ class MultiSetTests extends TestBase {
         }
     }
 
-    test("Multiset expression characters") {
+    test("Multiset expression characters", weight = 5) {
         assertResult(Seq('d','d','i','o')) {
             val first = MultiSet(Seq('d','d','d','g','h','i','i','i','o'))
             val second = MultiSet(Seq('a','b','d','g','i','i'))
