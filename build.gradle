@@ -36,6 +36,24 @@ dependencies {
     compile "org.scalacheck:scalacheck_${scalaMajorVersion}:1.14.3"
 }
 
+task(runIntREPL, dependsOn: 'classes', type: JavaExec) {
+    group = "Runnables"
+    main = "repls.RunREPL"
+    classpath = sourceSets.main.runtimeClasspath
+    args "IntREPL"
+    standardInput = System.in
+    outputs.upToDateWhen { false }
+}
+
+task(runMultiSetREPL, dependsOn: 'classes', type: JavaExec) {
+    group = "Runnables"
+    main = "repls.RunREPL"
+    classpath = sourceSets.main.runtimeClasspath
+    args "MultiSetREPL"
+    standardInput = System.in
+    outputs.upToDateWhen { false }
+}
+
 task zip(type: Zip) {
     group = "prepareZipForSubmit"
     description = "Zip your code for submission to Canvas"
