@@ -77,7 +77,7 @@ You will implement three multiset operations:
 
 More detailed approach for constructing a REPL:
 1. Convert Infix expression to RPN using the Shunting yard algorithm (below).
-2. Convert RPN to a parse tree (an example of this is [here](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/OOReversePolish.scala), which is discussed in the last 3 videos of these [video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66))
+2. Convert RPN to a parse tree (where each node is an object of a clase class) (an example of this is [here](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/OOReversePolish.scala), which is discussed in the last 3 videos of these [video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66))
 3. Simplify the parse tree using pattern matching ([lecture sides on pattern matching](#https://docs.google.com/presentation/d/1GPbegITJlA3EOkbhU9SLepxQgg6z1IARi0l6RiZrKsc/edit?usp=sharing)) and dynamic dispatch ([videos on dynamic dispatch]([video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66)).
 
 ### Tokenization
@@ -123,9 +123,11 @@ Your implementation should throw errors for at least the following:
 ## How to run your implementation
 
 From the command line run: 
-``` ./gradlew runIntREPL 
+```
+ ./gradlew runIntREPL 
 // or 
-./ gradlew runMultiSetREPL```
+./ gradlew runMultiSetREPL
+```
 
 In IntelliJ: In the gradle tab (on the right side) there is a folder/group 'repls/Tasks/runnables'. In here there are two tasks, namely: runIntREPL and runMultiSetREPL. You can run these to get a working instance of IntREPL and MultiSetREPL, respectively.
 
