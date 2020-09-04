@@ -5,7 +5,7 @@ In this exercise you will be making two calculators [REPLs](https://en.wikipedia
 The REPLs have three types of command:
 
 - **Expression Evaluation:** If the input is an expression (for example: `1 + 4 * 3 + 5`) then the output should be its result (18 in this example)
-- **Variable Assignment:** If the input is an assignment (for example: `n = 18 * m * 2 + 5`, the REPL should store the binding of that variable and print the new binding (in this case: `n = 77`, assuming m = 2).
+- **Variable Assignment:** If the input is an assignment (for example: `n = 18 * m * 2 + 5`, the REPL should store the binding of that variable (either as Int or Multiset) and print the new binding (in this case: `n = 77`, assuming m = 2). You always evaluate the assignment, it is always a constant. If you encounter a variable in the input, as in the example above, you need to use the bound variable. If it is unknown then the input is incorrect.
 - **Expression Simplification:** If the input starts with an "@" then the REPL should simplify the expression after the "@" according to the [rules below](#simplification-rules). For example, `@ ( ( n * 2 ) + ( n * 3 ) ) + a * b` should give `n * 5 + a * b`. Notice that we compute the `n * (2 + 3) = n * 5`, you should do the same. Notice that you do not have to simplify `5 * n * m * 3` to `15 * n * m`, but its bonus points if you do. 
 
 Note that evaluation and simplification only differ when dealing with unbound variables. Evaluating unbound variables give an error, but they can be simplified. Bound variables should be treated as their corresponding value both when simplifying and evaluating. For example:
@@ -49,7 +49,7 @@ You will implement three multiset operations:
 
 - `( a * b ) + ( a * c ) → a * ( b + c )`
 - `( b * a ) + ( a * c ) → a * ( b + c )`
-- `( a * b ) + ( b * a ) → a * ( b + c )`
+- `( a * b ) + ( c * a ) → a * ( b + c )`
 - `( b * a ) + ( c * a ) → a * ( b + c )`
 
 **Rules for Integer calculator REPL:**
@@ -126,7 +126,7 @@ From the command line run:
 ```
  ./gradlew runIntREPL 
 // or 
-./ gradlew runMultiSetREPL
+./gradlew runMultiSetREPL
 ```
 
 In IntelliJ: In the gradle tab (on the right side) there is a folder/group 'repls/Tasks/runnables'. In here there are two tasks, namely: runIntREPL and runMultiSetREPL. You can run these to get a working instance of IntREPL and MultiSetREPL, respectively.
