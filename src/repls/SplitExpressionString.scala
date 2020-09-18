@@ -41,13 +41,18 @@ object SplitExpressionString {
           addNonemptyCurAndReset()
           inLiteral = false
         }
-      }
-      c match {
-        case '{'                    => inLiteral = true
-        case ' ' | '\t'             =>   addNonemptyCurAndReset()
-        case ',' | '+' | '*' | '-'  => { addNonemptyCurAndReset(); builder.addOne(c.toString)}
-        case _ if c.isLetterOrDigit => curString += c
-        case _                      => throw new Exception("Do not know how to parse " + c )
+      } else {
+        c match {
+          case '{' => {addNonemptyCurAndReset() ; inLiteral = true; curString = "{" }
+          case ' ' | '\t' => addNonemptyCurAndReset()
+          case '-' if curString.isEmpty => { addNonemptyCurAndReset(); curString = "-" }
+          case '-' if curString.nonEmpty => { addNonemptyCurAndReset(); builder.addOne(c.toString) }
+          case '(' | ')' | ',' | '+' | '*' => {
+            addNonemptyCurAndReset(); builder.addOne(c.toString)
+          }
+          case _ if c.isLetterOrDigit => curString += c
+          case _ => throw new Exception("Do not know how to parse " + c)
+        }
       }
     }
     builder.result()
