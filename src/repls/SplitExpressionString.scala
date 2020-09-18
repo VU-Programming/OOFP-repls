@@ -36,8 +36,8 @@ object SplitExpressionString {
 
     for(c <- exp) {
       if(inLiteral) {
+        curString+= c
         if(c == '}') {
-          curString+= c
           addNonemptyCurAndReset()
           inLiteral = false
         }
