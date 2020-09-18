@@ -55,6 +55,7 @@ object SplitExpressionString {
         }
       }
     }
+    addNonemptyCurAndReset()
     builder.result()
   }
 
