@@ -29,7 +29,7 @@ case class MultiSet[T]() {
     ∀x m_c(x) = max(m_a(x) - m_b(x), 0)
 
     Example:
-    {a,b,b,d} + {b,c,c,d,d} = {a,b}
+    {a,b,b,d} - {b,c,c,d,d} = {a,b}
      */
     def -(that: MultiSet[T]): MultiSet[T] = {
         MultiSet()
