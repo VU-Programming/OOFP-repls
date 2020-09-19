@@ -146,7 +146,7 @@ We have given a skeleton of a case class MultiSet. Inside you find [overloaded f
 
 `toSeq` is used in the tests, but you can also use this in your REPL implementation, same for the `toString`.
 
-The skeleton comes with an [companion object](https://docs.scala-lang.org/overviews/scala-book/companion-objects.html). This used as a factory in the tests. 
+The skeleton comes with an [companion object](https://docs.scala-lang.org/overviews/scala-book/companion-objects.html). In this you have to implement the apply function (a factory method, explained in more depth in [companion object](https://docs.scala-lang.org/overviews/scala-book/companion-objects.html)). This will take a sequence of elements, and you should construct a MultiSet from this. We use this as a factory in the tests, however you should also use this in your REPL to build a MultiSet. 
 
 ## How to run your implementation
 
