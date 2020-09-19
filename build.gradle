@@ -83,10 +83,33 @@ task spec(dependsOn: ['testClasses'], type: JavaExec) {
   classpath = sourceSets.test.runtimeClasspath
 }
 
-task fraction(type: JavaExec, dependsOn: classes) {
+task test4_1(type: Test) {
+    description="Run tests for assignment 4.1 (repls)"
+    filter {
+        includeTestsMatching "repls.ReplsTestSuite4_1"
+    }
+}
+
+task test4_2(type: Test) {
+    description="Run tests for assignment 4.2 (repls)"
+    filter {
+        includeTestsMatching "repls.ReplsTestSuite4_2"
+    }
+}
+
+task fraction4_1(type: JavaExec, dependsOn: classes) {
     // To make sure you can always run this task
     outputs.upToDateWhen { false }
-    main = 'repls.infrastructure.ReportFraction'
+    main = 'repls.infrastructure.ReportFraction4_1'
+    classpath sourceSets.test.runtimeClasspath
+    classpath sourceSets.main.runtimeClasspath
+    classpath configurations.runtime
+}
+
+task fraction4_2(type: JavaExec, dependsOn: classes) {
+    // To make sure you can always run this task
+    outputs.upToDateWhen { false }
+    main = 'repls.infrastructure.ReportFraction4_2'
     classpath sourceSets.test.runtimeClasspath
     classpath sourceSets.main.runtimeClasspath
     classpath configurations.runtime
