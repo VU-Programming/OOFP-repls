@@ -70,14 +70,14 @@ You will implement three multiset operations:
 - `{} + e → e`
 
 ## Suggested approach:
-1. Completely implement the Integer calculator Repl and make sure it passes all the tests. .
-2. Implement the generic, immutable multiset. 
+1. Completely implement the Integer calculator Repl and make sure it passes all the tests.
+2. Implement the generic and immutable multiset, and all its accommodating functions. 
 3. Implement the Multiset calculator Repl by copying and modifying code from the Integer Repl and making sure it passes all the tests.
-4. Your code now works, but has a lot of duplicated code, which hinders maintenance and readability. Refactor your code such that the common parts of both REPLs are shared.
+4. Your code now works, but has a lot of duplicated code, which hinders maintenance and readability. Refactor your code, into REPL base, such that the common parts of both REPLs are shared.
 
 More detailed approach for constructing a REPL:
 1. Convert Infix expression to RPN using the Shunting yard algorithm (below).
-2. Convert RPN to a parse tree (where each node is an object of a clase class) (an example of this is [here](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/OOReversePolish.scala), which is discussed in the last 3 videos of these [video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66))
+2. Convert RPN to a parse tree (where each node is an object of a case class) (an example of this is [here](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/OOReversePolish.scala), which is discussed in the last 3 videos of these [video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66))
 3. Simplify the parse tree using pattern matching [lecture sides on pattern matching](https://docs.google.com/presentation/d/1GPbegITJlA3EOkbhU9SLepxQgg6z1IARi0l6RiZrKsc/edit?usp=sharing) [example of rewriting using pattern matching](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/PatternMatchReversePolish.scala) and dynamic dispatch ([videos on dynamic dispatch]([video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66)).
 
 ### Tokenization
@@ -104,8 +104,29 @@ We also expect you to "pretty print" a simplified expression such as `( ( a * b 
 ##### Inheritance
 Scala, and other high level languages, offers many techniques to have good code reuse. With inheritance, you can reuse code for classes which the same structure. This allows classes to dispatch method calls dynamically, also known as [dynamic dispatching](https://en.wikipedia.org/wiki/Dynamic_dispatch). Scala will call the lowest implementation of a method. In this method you can call the method of the super class, by `super.methodName()`.
 
+In the skeleton we have given you this level of inheritance: REPL(trait) <-- REPLBase <-- IntREPL, MultiSetREPL. This meaning, shared code between IntREPL and MultiSetREPL should go into REPLBase. REPLBase is for a generic REPL, while IntREPL and MultiSetREPL are specific types of REPLS.
+            
+        
+
 #### Pattern matching
-[Pattern matching](https://docs.scala-lang.org/tour/pattern-matching.html) ([lecture sides on pattern matching](#https://docs.google.com/presentation/d/1GPbegITJlA3EOkbhU9SLepxQgg6z1IARi0l6RiZrKsc/edit?usp=sharing)) is another powerful feature of Scala, especially on case classes. This makes matching cases extremely easy and with few lines of code. This improves maintenance and readability drastically.
+[Pattern matching](https://docs.scala-lang.org/tour/pattern-matching.html) ([lecture sides on pattern matching](https://docs.google.com/presentation/d/1GPbegITJlA3EOkbhU9SLepxQgg6z1IARi0l6RiZrKsc/edit?usp=sharing)) is another powerful feature of Scala, especially on case classes. This makes matching cases extremely easy and with few lines of code. This improves maintenance and readability drastically.
+
+
+#### Using associated type (`type Base` in the REPL base)
+An abstract class can have an abstract type variable. This type should be defined in a child class. In this assignment we make use of this with `type Base`, in the REPL base file. `Base` is now an abstract variable, and by overloading this in IntREPL or MultiSetREPL, with `Int` or `MultiSet`, we can specify this type. With this you can return a type that is still unknown/abstract. For example, you can write an evaluate function that returns this `Base`:
+
+```scala
+abstract class REPLBase extends REPL {
+    type Base
+    
+    def evaluate(expression: String): Base = _
+}
+```
+
+For the IntREPL, `Base` has been specified to be `Int`, so this function would return an `Int`, and a `MultiSet` for the MultiSetREPL. This way, a function or variables can be shared while returning different types.
+
+For more information visit the scala docs [here](https://docs.scala-lang.org/tour/abstract-type-members.html).
+
 
 ## Format of the assignment and tests
 You may have noticed the examples we have given in these instructions, have spaces before and after the brackets. For example in `( 2 + 3 ) * 2`. This is intentional, making parsing easier and more reliable. For this reason, pretty printing should return the same, this making it possible to use the output of the pretty printing again.
@@ -119,6 +140,13 @@ Your implementation should throw errors for at least the following:
 * Invalid command
 * No value given when assigning variable
 * No expression given to simplify
+
+### MultiSet
+We have given a skeleton of a case class MultiSet. Inside you find [overloaded functions](https://docs.scala-lang.org/tour/operators.html) (`+ - * toString`), these need to be implemented, with the corresponding outcome.
+
+`toSeq` is used in the tests, but you can also use this in your REPL implementation, same for the `toString`.
+
+The skeleton comes with an [companion object](https://docs.scala-lang.org/overviews/scala-book/companion-objects.html). This used as a factory in the tests. 
 
 ## How to run your implementation
 
