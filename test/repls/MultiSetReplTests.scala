@@ -419,6 +419,19 @@ class MultiSetReplTests extends TestBase {
 
 
 
+    test("Simplify advanced",weight = 10) {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        repl.readEval("z = {a,b,b}")
+        repl.readEval("q = {a}")
+        val result = repl.readEval("@ {} + ( ( b + {} )  * (a + {} ) + (c * c) * (a * a)) * ( ( a * b ) + ( a * c ) + ( (z + q) * {} ) )")
+        val expected = "a * ( b + c )"
+
+        assert(result == expected)
+    }
+
+
+
     /*
     Simplification with assigned variables
      */
