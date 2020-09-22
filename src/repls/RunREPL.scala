@@ -1,4 +1,4 @@
-// DO NOT MODIFY THIS FILE
+// You do not need to modify this file
 package repls
 
 object RunREPL {

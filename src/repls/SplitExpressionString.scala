@@ -1,6 +1,9 @@
+// You do not need to modify this file
 package repls
 
 object SplitExpressionString {
+
+  // You can adjust this code if you want to
 
   /* Split strings in a way that is handy for this exercise.
 
@@ -56,7 +59,7 @@ object SplitExpressionString {
             // Handle subtraction separately
           case '-' if curString.nonEmpty => { addNonemptyStringAndReset(); builder.addOne(character.toString) }
             // Is operator
-          case '(' | ')' | ',' | '+' | '*' => {
+          case '(' | ')' | ',' | '+' | '*' | '=' | '@' => {
             addNonemptyStringAndReset(); builder.addOne(character.toString)
           }
             // Add character or number to the string

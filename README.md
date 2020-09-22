@@ -56,7 +56,11 @@ You will implement three multiset operations:
 
 ## Simplification Rules:
 
+When simplifying an expression, you should employ the following rules:
+
 **Distributivity:**
+
+The following rules apply both to the integer repl and the multiset repl. 
 
 - `( a * b ) + ( a * c ) → a * ( b + c )`
 - `( b * a ) + ( a * c ) → a * ( b + c )`
@@ -80,6 +84,12 @@ You will implement three multiset operations:
 - `e + {} → e`
 - `{} + e → e`
 
+**Nested application of rules***
+
+For some expressions, such as `(x + (0 + (0 + 0)))` it is not enough to simplify the top-level and then recursively simplify the sub-parts (this is called simplifying top-down). In this case we will then end up with `x + (0 + 0))` instead of `x + 0`. To solve this, choose one of two tactics:
+* Simplify *bottom-up*: first simplify the sub-parts of the expression, before simplifying the whole. 
+* Simplify until you reach a *fixpoint*. Apply rules in top-down fashion until the expression does not change anymore. 
+
 ## Skeleton
 We have given a pretty barebones skeleton. This is to give you the full freedom of implementation. We have supplied you with the minimum for this assignment to work with the tests.
 
@@ -89,8 +99,14 @@ For the REPL we have given a `REPLBase`, which is an abstract class. This can be
 ### MultiSet
 Implement your MultiSet here. Note that **all** the functions we have given need to be implemented!
 
-### SplitExpressionString
-*Optionally* you can make use of `SplitExpressionString` (this is not required for the tests, see [below](#format-of-the-assignment-and-tests)). Inside we have given a function to split a string into a sequence of strings, the various parts of an expression (operators, variables, or (negative) numbers). Note that this does not split the command character ('@' and '='). This needs to be done before calling `splitExpressionString`. Inside the file you can find a more detailed explanation.
+### Splitting the input string
+
+You can use `.split(" ")` on the input string to split the string into parts, for example `"a = 23 + b".split
+(" ") -> Array("a","23","+","b")`. The downside of this is that you have to write a space between "+" and its
+ arguments. If you find this annoying, you can use or adjust `SplitExpressionString`, which splits strings in a way
+  that is handy for this exercise.  Usage of this function is *optional* and not required for passing the tests. Inside the file
+ `SplitExpressionString` you can
+ find a more detailed explanation.
 
 ## Suggested approach:
 1. Completely implement the Integer calculator Repl and make sure it passes all the tests.
@@ -101,7 +117,7 @@ Implement your MultiSet here. Note that **all** the functions we have given need
 More detailed approach for constructing a REPL:
 1. Convert Infix expression to RPN using the Shunting yard algorithm (below).
 2. Convert RPN to a parse tree (where each node is an object of a case class) (an example of this is [here](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/OOReversePolish.scala), which is discussed in the last 3 videos of these [video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66))
-3. Simplify the parse tree using pattern matching [lecture sides on pattern matching](https://docs.google.com/presentation/d/1GPbegITJlA3EOkbhU9SLepxQgg6z1IARi0l6RiZrKsc/edit?usp=sharing) [example of rewriting using pattern matching](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/PatternMatchReversePolish.scala) and dynamic dispatch ([videos on dynamic dispatch]([video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66)).
+3. Simplify the parse tree using pattern matching video [video lectures](https://www.youtube.com/watch?v=d-4bKM8VEDQ&list=PLi-VVX8q87FKPlg-KeezbTb5v7VLqgk30)  [example of rewriting using pattern matching](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/PatternMatch.scala) and dynamic dispatch ([videos on dynamic dispatch]([video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66)).
 
 ### Tokenization
 For parsing the input strings, you need to know the meaning of the characters. [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) is the processes of giving abstract parts meaning. For example, giving `+` the token of an operator. This can be used in combination with [pattern matching](#pattern-matching) for the [Shunting Yard algorithm](#shunting-yard-algorithm). You could match on the constants, variables, and operators, in an expression.
@@ -132,7 +148,7 @@ In the skeleton we have given you this level of inheritance: REPL(trait) <-- REP
         
 
 #### Pattern matching
-[Pattern matching](https://docs.scala-lang.org/tour/pattern-matching.html) ([lecture sides on pattern matching](https://docs.google.com/presentation/d/1GPbegITJlA3EOkbhU9SLepxQgg6z1IARi0l6RiZrKsc/edit?usp=sharing)) is another powerful feature of Scala, especially on case classes. This makes matching cases extremely easy and with few lines of code. This improves maintenance and readability drastically.
+[Pattern matching](https://docs.scala-lang.org/tour/pattern-matching.html) ([video lectures on pattern matching](https://www.youtube.com/watch?v=d-4bKM8VEDQ&list=PLi-VVX8q87FKPlg-KeezbTb5v7VLqgk30)) is another powerful feature of Scala, especially on case classes. This makes matching cases extremely easy and with few lines of code. This improves maintenance and readability drastically.
 
 
 #### Using associated type (`type Base` in the REPL base)
