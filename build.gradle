@@ -31,7 +31,7 @@ dependencies {
     implementation "org.scala-lang:scala-library:${scalaVersion}"
     compile fileTree(include: ['*.jar'], dir: 'lib')
     testImplementation("junit:junit:4.13")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.6.0")
+    testCompile("org.junit.vintage:junit-vintage-engine:5.6.0")
     testCompile "org.scalatest:scalatest_${scalaMajorVersion}:3.0.8"
     compile "org.scalacheck:scalacheck_${scalaMajorVersion}:1.14.3"
 }
@@ -54,19 +54,24 @@ task(runMultiSetREPL, dependsOn: 'classes', type: JavaExec) {
     outputs.upToDateWhen { false }
 }
 
+
+
+
 task zip(type: Zip) {
     group = "prepareZipForSubmit"
-    description = "Zip your code for submission to Canvas"
+    description = "Zip your code for submission to Codegrade"
 
     // To make sure you can always run this task
     outputs.upToDateWhen { false }
-    dependsOn build
-    from fileTree(dir: 'src/bla')
-    include '*/**'
+    dependsOn assemble
+    dependsOn testClasses
+    from fileTree(dir: '.')
+    include 'src/repls/**.scala'
 
-    archiveFileName = 'exercises.zip'
+    archiveFileName = 'repls.zip'
     destinationDir(file("$projectDir"))
 }
+
 
 tasks.withType(Test) {
     group = "verification"
