@@ -360,6 +360,15 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
+    test("Simplify nested") {
+        val repl = REPLFactory.makeIntREPL()
+
+        val result = repl.readEval("@ a + ( 0 + ( 0 + ( 0 + 0 ) ) )")
+        val expected = "a"
+
+        assert(result == expected)
+    }
+
     test("Simplify distributivity simple") {
         val repl = REPLFactory.makeIntREPL()
 
@@ -373,7 +382,7 @@ class IntReplTests extends TestBase {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("@ (b * (1 + x) ) + ( (1 + x) * c)")
-        val expected = "(1 + x) * ( b + c )"
+        val expected = "( 1 + x ) * ( b + c )"
 
         assert(result == expected)
     }
@@ -383,7 +392,7 @@ class IntReplTests extends TestBase {
         val repl = REPLFactory.makeIntREPL()
 
         val result = repl.readEval("@ ( ( x + 1) * 2) + (3 * ( x + 1) )")
-        val expected = "5 * ( x + 1 )"
+        val expected = "( x + 1 ) * 5"
 
         assert(result == expected)
     }

@@ -360,6 +360,65 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
+
+    test("Simplify abstract brackets 2") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ a + ( b + {} )")
+        val expected = "a + b"
+
+        assert(result == expected)
+    }
+
+    test("Simplify nested") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ a + ( {} + ( {} + ( {} + {} ) ) )")
+        val expected = "a"
+
+        assert(result == expected)
+    }
+
+    test("Simplify distributivity simple") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ (a * b ) + (a * c)")
+        val expected = "a * ( b + c )"
+
+        assert(result == expected)
+    }
+
+    test("Simplify distributivity 2") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ (b * ( {a} + x) ) + ( ( {a} + x) * c)")
+        val expected = "( {a} + x ) * ( b + c )"
+
+        assert(result == expected)
+    }
+
+
+    test("Simplify distributivity 3", weight = 3) {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ ( ( x + {b} ) * {a}) + ({a,b,c} * ( x + {b}) )")
+        val expected = "( x + {b} ) * {a,a,b,c}"
+
+        assert(result == expected)
+    }
+
+
+    test("Simplify distributivity 4") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ b * a + c * a")
+        val expected = "a * ( b + c )"
+
+        assert(result == expected)
+    }
+
+
+
     /*
     Simplification with assigned variables
      */
@@ -372,6 +431,8 @@ class MultiSetReplTests extends TestBase {
 
         assert(result == expected)
     }
+
+
 
 
     test("Simplify with assigned variables brackets", weight = 2) {
