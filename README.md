@@ -80,6 +80,18 @@ You will implement three multiset operations:
 - `e + {} → e`
 - `{} + e → e`
 
+## Skeleton
+We have given a pretty barebones skeleton. This is to give you the full freedom of implementation. We have supplied you with the minimum for this assignment to work with the tests.
+
+### REPLs
+For the REPL we have given a `REPLBase`, which is an abstract class. This can be used for code sharing, explained [below](#inheritance). `IntREPL` and `MultiSetREPL` extend this abstract class. These, and `REPLBase`, you need to modify with your own implementation. The `REPL` trait you cannot modify, as this is used for running the REPL. Also do not modify the `REPLFactory`, and `RunREPL`, these don't need to be implemented further.
+
+### MultiSet
+Implement your MultiSet here. Note that **all** the functions we have given need to be implemented!
+
+### SplitExpressionString
+*Optionally* you can make use of `SplitExpressionString` (this is not required for the tests, see [below](#format-of-the-assignment-and-tests)). Inside we have given a function to split a string into a sequence of strings, the various parts of an expression (operators, variables, or (negative) numbers). Note that this does not split the command character ('@' and '='). This needs to be done before calling `splitExpressionString`. Inside the file you can find a more detailed explanation.
+
 ## Suggested approach:
 1. Completely implement the Integer calculator Repl and make sure it passes all the tests.
 2. Implement the generic and immutable multiset, and all its accommodating functions. 
@@ -141,6 +153,8 @@ For more information visit the scala docs [here](https://docs.scala-lang.org/tou
 
 ## Format of the assignment and tests
 You may have noticed the examples we have given in these instructions, have spaces before and after the brackets. For example in `( 2 + 3 ) * 2`. This is intentional, making parsing easier and more reliable. For this reason, pretty printing should return the same, this making it possible to use the output of the pretty printing again.
+
+However, for ease of use, you can make use of `SplitExpressionString`, or a similar implementation, to parse the input. This is not required for the tests, it does however make it easier to use manually (no need for the spaces after every character).
 
 ### Erros
 Your implementation should throw errors for at least the following:

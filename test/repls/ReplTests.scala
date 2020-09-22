@@ -8,12 +8,12 @@ import repls.infrastructure.TestBase
 @RunWith(classOf[JUnitRunner])
 class ReplTests extends TestBase {
   /*
-  IntRepl errors
+  IntRepl Throwables
    */
   test("Invalid expression", weight = 2) {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[NoSuchElementException] {
+    assertThrows[Throwable] {
       repl.readEval("1 +")
     }
   }
@@ -21,7 +21,7 @@ class ReplTests extends TestBase {
   test("Open brackets right") {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[NoSuchElementException] {
+    assertThrows[Throwable] {
       repl.readEval("( 1 + 3")
     }
   }
@@ -29,7 +29,7 @@ class ReplTests extends TestBase {
   test("Invalid brackets left") {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[NoSuchElementException] {
+    assertThrows[Throwable] {
       repl.readEval(" 5 * 4 )")
     }
   }
@@ -37,7 +37,7 @@ class ReplTests extends TestBase {
   test("Unknown operator") {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("10 / 5")
     }
   }
@@ -45,7 +45,7 @@ class ReplTests extends TestBase {
   test("No known variable") {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("a = 10")
       repl.readEval("a + b")
     }
@@ -54,7 +54,7 @@ class ReplTests extends TestBase {
   test("Assignment with unknown variable") {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("a = b + 3")
     }
   }
@@ -62,7 +62,7 @@ class ReplTests extends TestBase {
   test("Invalid simplification", weight = 2) {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[NoSuchElementException] {
+    assertThrows[Throwable] {
       repl.readEval("@ a +")
     }
   }
@@ -70,7 +70,7 @@ class ReplTests extends TestBase {
   test("Invalid simplification open bracket right") {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[NoSuchElementException] {
+    assertThrows[Throwable] {
       repl.readEval("@ ( a +")
     }
   }
@@ -78,18 +78,18 @@ class ReplTests extends TestBase {
   test("Invalid simplification open bracket left") {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[NoSuchElementException] {
+    assertThrows[Throwable] {
       repl.readEval("@ a + )")
     }
   }
 
   /*
-  MultisetRepl errors
+  MultisetRepl Throwables
   */
   test("Invalid multiset", weight = 2) {
     val repl = REPLFactory.makeMultiSetREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("{a,b")
     }
   }
@@ -97,7 +97,7 @@ class ReplTests extends TestBase {
   test("Invalid multiset expression", weight = 2) {
     val repl = REPLFactory.makeMultiSetREPL()
 
-    assertThrows[NoSuchElementException] {
+    assertThrows[Throwable] {
       repl.readEval("{a,b} +")
     }
   }
@@ -105,7 +105,7 @@ class ReplTests extends TestBase {
   test("Open brackets right multiset") {
     val repl = REPLFactory.makeMultiSetREPL()
 
-    assertThrows[NoSuchElementException] {
+    assertThrows[Throwable] {
       repl.readEval("( {a,c} + {a,b}")
     }
   }
@@ -114,7 +114,7 @@ class ReplTests extends TestBase {
   test("Invalid brackets left multiset") {
     val repl = REPLFactory.makeMultiSetREPL()
 
-    assertThrows[NoSuchElementException] {
+    assertThrows[Throwable] {
       repl.readEval(" {a,c} - {a,b} )")
     }
   }
@@ -122,7 +122,7 @@ class ReplTests extends TestBase {
   test("Unknown operator multiset") {
     val repl = REPLFactory.makeMultiSetREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("{a,a,b} > {a,b}")
     }
   }
@@ -130,19 +130,19 @@ class ReplTests extends TestBase {
   test("No known multiset variable") {
     val repl = REPLFactory.makeMultiSetREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("a = {a,a,b,b,c}")
       repl.readEval("a + b")
     }
   }
 
   /*
-  Common errors
+  Common Throwables
    */
   test("No valid variable name", weight = 4) {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("15 = 1")
     }
   }
@@ -150,7 +150,7 @@ class ReplTests extends TestBase {
   test("Invalid type") {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("42 + {a,a,b}")
     }
   }
@@ -158,7 +158,7 @@ class ReplTests extends TestBase {
   test("Invalid type assigning") {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("n = {a,b,c,c}")
     }
   }
@@ -166,7 +166,7 @@ class ReplTests extends TestBase {
   test("Not known command", weight = 2) {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("! 1 * 4")
     }
   }
@@ -174,7 +174,7 @@ class ReplTests extends TestBase {
   test("Assignment without value", weight = 2) {
     val repl = REPLFactory.makeIntREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("a = ")
     }
   }
@@ -182,7 +182,7 @@ class ReplTests extends TestBase {
   test("Simplification without expression", weight = 2) {
     val repl = REPLFactory.makeMultiSetREPL()
 
-    assertThrows[Error] {
+    assertThrows[Throwable] {
       repl.readEval("@ ")
     }
   }
