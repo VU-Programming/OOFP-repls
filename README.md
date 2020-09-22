@@ -5,10 +5,17 @@ In this exercise you will be making two calculators [REPLs](https://en.wikipedia
 The REPLs have three types of command:
 
 - **Expression Evaluation:** If the input is an expression (for example: `1 + 4 * 3 + 5`) then the output should be its result (18 in this example)
-- **Variable Assignment:** If the input is an assignment (for example: `n = 18 * m * 2 + 5`, the REPL should store the binding of that variable (either as Int or Multiset) and print the new binding (in this case: `n = 77`, assuming m = 2). You always evaluate the assignment, it is always a constant. If you encounter a variable in the input, as in the example above, you need to use the bound variable. If it is unknown then the input is incorrect.
-- **Expression Simplification:** If the input starts with an "@" then the REPL should simplify the expression after the "@" according to the [rules below](#simplification-rules). For example, `@ ( ( n * 2 ) + ( n * 3 ) ) + a * b` should give `n * 5 + a * b`. Notice that we compute the `n * (2 + 3) = n * 5`, you should do the same. Notice that you do not have to simplify `5 * n * m * 3` to `15 * n * m`, but its bonus points if you do. 
+- **Variable Assignment:** If the input is an assignment (for example: `n = 18 * m * 2 + 5`, the REPL should store
+ the binding of that variable (either as Int or Multiset) and print the new binding (in this case: `n = 77`, assuming
+  m = 2). If you encounter a variable in the input, as in the example above, you need to the value associated with
+   that variable. If a variable does not have a value (it is unbound), then the input for variable assignment is
+    incorrect. Hence, we can only bind variables to constants (not to expressions).
+- **Expression Simplification:** If the input starts with an "@" then the REPL should simplify the expression after the "@" according to the [rules below](#simplification-rules). For example, `@ ( ( n * 2 ) + ( n * 3 ) ) + a * b` should give `n * 5 + a * b`. Notice that we compute the `n * (2 + 3) = n * 5`, you should do the same. Notice that you do not have to simplify `5 * n * m * 3` to `15 * n * m`. 
 
-Note that evaluation and simplification only differ when dealing with unbound variables. Evaluating unbound variables give an error, but they can be simplified. Bound variables should be treated as their corresponding value both when simplifying and evaluating. For example:
+Note that evaluation and simplification only differ when dealing with unbound variables. Evaluating unbound variables
+ give an error, but simplifying expression with unbound variables does not.  Bound variables should be treated as
+  their corresponding value both when
+  simplifying and evaluating. For example:
 ```
 n = 18 + 2
 > n = 20
@@ -21,7 +28,11 @@ Unkown variable: m
 ```
 
 ## MultiSets
-A multiset is like a set, but allows for duplicates. The number of instances of an element in a multiset is called its *multiplicity*. For example, in the multiset `{ a, a, a, b, a }`, `a` has a multiplicity of 4, and `b` has a multiplicity of 1. The multiplicity is always an integer and never negative. The multiplicity of an element which is not in the multiset is 0.
+A multiset is like a set, but allows for duplicates. The number of instances of an element, `x` in a multiset `a` is
+ called
+ its *multiplicity*, written   <code>m<sub>a</sub>(x) </code>. For example, in the multiset `{ a, a, a, b, a }`, `a
+ ` has a multiplicity of 4, and `b
+ ` has a multiplicity of 1. The multiplicity is always an integer and never negative. The multiplicity of an element which is not in the multiset is 0.
 
 You will implement three multiset operations:
 
