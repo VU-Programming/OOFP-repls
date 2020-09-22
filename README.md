@@ -2,6 +2,8 @@
 
 *Required knowledge*: To make this assignment, you need to be up to speed on the lecture up to and including pattern matching.
 
+**NOTE** This assignment is different from the previous assignments in that it **requires** you to use advanced scala techniques such as pattern matching. The consensus among the TAs is that it is _**much harder**_ than the other assignments. Start early!!
+
 In this exercise you will be making two calculators [REPLs](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop). The first of these is a regular calculator dealing with integers, the second operates on [MultiSets](#multisets). A lot of the techniques discussed in this course are useful to enable code reuse and this assignment gives you ample opportunity to employ these techniques since both REPLs have very similar functionality.
  
 The REPLs have three types of command:
