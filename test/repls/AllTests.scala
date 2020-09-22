@@ -12,7 +12,6 @@ class AllTests extends Suites(
     new IntReplTests,
     new MultiSetReplTests,
     new MultiSetTests,
-    new ReplTests
 ) {
 
     override def run(testName: Option[String], args: Args): Status = {
