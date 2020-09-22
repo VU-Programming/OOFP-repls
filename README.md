@@ -151,16 +151,6 @@ You may have noticed the examples we have given in these instructions, have spac
 
 However, for ease of use, you can make use of `SplitExpressionString`, or a similar implementation, to parse the input. This is not required for the tests, it does however make it easier to use manually (no need for the spaces after every character).
 
-### Errors
-Your implementation should throw errors for at least the following:
-* Invalid operator
-* Unknown variable
-* Invalid variable name (cannot be a number)
-* Type mismatching (for example inputting a multiset in an Integer Repl expression)
-* Invalid command
-* No value given when assigning variable
-* No expression given to simplify
-
 ### MultiSet
 We have given a skeleton of a case class MultiSet. Inside you find [overloaded functions](https://docs.scala-lang.org/tour/operators.html) (`+ - * toString`), these need to be implemented, with the corresponding outcome.
 
