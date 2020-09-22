@@ -221,3 +221,13 @@ abstract class REPLBase extends REPL {
 For the IntREPL, `Base` has been specified to be `Int`, so this function would return an `Int`, and a `MultiSet` for the MultiSetREPL. This way, a function or variables can be shared while returning different types.
 
 For more information visit the scala docs [here](https://docs.scala-lang.org/tour/abstract-type-members.html).
+
+
+## Assignments
+
+There are 2 assignments for these repls:
+### 4.1 Assignment 4.1 IntREPL + MultiSet 
+
+Implement the IntREPL and the implement the MultiSet (not the MultiSet *REPL*) To pass this assignment, you need to pass 17 tests from `TetrisTestSuite3_1`.
+
+### 3.2 Tetris
