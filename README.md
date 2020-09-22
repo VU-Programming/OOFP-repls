@@ -181,24 +181,6 @@ Another method would be by running the RunREPL object file, and give the respect
 
 With this now you can use your REPLs as any other simple REPL, inputting an expression and outputting, hopefully, the expected output. In combination with the test examples, you can use this to help debug your implementation, and check if it returns the correct output. 
 
-## Grading ##
-
-Grading is mostly based on how much code is reused, and is built up as follows:
-* Amount of tests passed: 5.5 points
-* Reuse of common structure of `+`,`-` and `*` in `MultiSet` 0.5 points (hint : use first-class functions)
-*  Reuse of REPL code between the int repl and multiset repl
-    * Sharing of the expression representation 0.25 points
-    * Sharing of the code related to variable assignment 0.25 points
-    * Sharing of the commonalities in parsing expressions (string -> Expression)) 0.5 points
-    * Sharing of the commonalities in evaluating expressions 0.5 points
-
-    * Sharing of the commonalities in simplifying expressions 0.5
-* Code style 2 points
-
-Total : 10 points
-
-Note that to get full points for sharing code, the common code needs to go in `REPLBase` and need to have extension points (e.g. abstract methods) such that you can easily add repls by subclassing `REPLBase`.  The `REPLBase` code should not have any code specific to the Integer or Multiset REPL (this should be in their respective classes). It should for example be possible to add another repl which centers around `Booleans` *without* modifying the `REPLBase` code. Hence you will for example not get full points if you have in REPLBase that checks via `if` statements or something similar whether it is handling Ints or Multisets.
-
 
 ### Techniques for code reuse
 ##### Inheritance
@@ -228,6 +210,24 @@ For more information visit the scala docs [here](https://docs.scala-lang.org/tou
 There are 2 assignments for these repls:
 ### 4.1 Assignment 4.1 IntREPL + MultiSet 
 
-Implement the IntREPL and the implement the MultiSet (not the MultiSet *REPL*) To pass this assignment, you need to pass 17 tests from `TetrisTestSuite3_1`.
+Implement the IntREPL and the implement the MultiSet (not the MultiSet *REPL*) To pass this assignment, you need to get at least 48 points from the ReplsTestSuite4_1 test suite (not all tests are valued equally, as indicated by the weight argument after test name)
 
-### 3.2 Tetris
+### 4.2 Assignment 4.2 MultiSetRepl + Sharing
+
+Implement the MultiRepl and share code between the MultiSet REPL and the Int Repl.
+
+Grading is mostly based on how much code is reused, and is built up as follows:
+* Amount of tests passed (`ReplTestSuite4_2`): 5.5 points
+* Reuse of common structure of `+`,`-` and `*` in `MultiSet` 0.5 points (hint : use first-class functions)
+*  Reuse of REPL code between the int repl and multiset repl
+    * Sharing of the expression representation 0.25 points
+    * Sharing of the code related to variable assignment 0.25 points
+    * Sharing of the commonalities in parsing expressions (string -> Expression)) 0.5 points
+    * Sharing of the commonalities in evaluating expressions 0.5 points
+
+    * Sharing of the commonalities in simplifying expressions 0.5
+* Code style 2 points
+
+Total : 10 points
+
+Note that to get full points for sharing code, the common code needs to go in `REPLBase` and need to have extension points (e.g. abstract methods) such that you can easily add repls by subclassing `REPLBase`.  The `REPLBase` code should not have any code specific to the Integer or Multiset REPL (this should be in their respective classes). It should for example be possible to add another repl which centers around `Booleans` *without* modifying the `REPLBase` code. Hence you will for example not get full points if you have in REPLBase that checks via `if` statements or something similar whether it is handling Ints or Multisets.
