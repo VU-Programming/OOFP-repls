@@ -32,7 +32,7 @@ abstract class ReportFraction {
             override def write(i: Int): Unit = ()
         }))
         val scoreCounter = new ScoreCounter()
-        Tests().runDirect(None, Args(
+        Tests.runDirect(None, Args(
             reporter = new CustomReporter(out),
             configMap = ConfigMap("scoreCounter" -> scoreCounter))
         )
@@ -63,7 +63,7 @@ object ReportFraction4_2 extends ReportFraction {
         val scoreCounter = runGetScoreCounter()
 
         out.printf("You got %d/%d points!\n", scoreCounter.points, scoreCounter.maxPoints)
-        out.printf("Your base grade for excercise 4.2 will be: %.2f\n", scoreCounter.fraction() * Tests().MaxPoints)
+        out.printf("Your base grade for excercise 4.2 will be: %.2f\n", scoreCounter.fraction() * Tests.MaxPoints)
         out.printf("Fractiontouseforcodegrade %.2f", scoreCounter.fraction())
     }
 }
