@@ -19,7 +19,7 @@ class CustomReporter(val out : PrintStream) extends Reporter {
 
 // reports your score as a fraction between 0 and 1 for codegrade
 abstract class ReportFraction {
-    def Tests(): ReplsTestSuitesBase
+    def Tests: ReplsTestSuitesBase
 
     def runGetScoreCounter(): ScoreCounter = {
         val out = System.out
@@ -41,7 +41,7 @@ abstract class ReportFraction {
 }
 
 object ReportFraction4_1 extends ReportFraction {
-    override def Tests() = new ReplsTestSuite4_1()
+    override def Tests = new ReplsTestSuite4_1()
 
     def main(args: Array[String]): Unit = {
         val out = System.out;
@@ -56,7 +56,7 @@ object ReportFraction4_1 extends ReportFraction {
 }
 
 object ReportFraction4_2 extends ReportFraction {
-    override def Tests() = new ReplsTestSuite4_2()
+    override def Tests = new ReplsTestSuite4_2()
 
     def main(args: Array[String]): Unit = {
         val out = System.out;
