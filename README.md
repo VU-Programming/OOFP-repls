@@ -132,6 +132,7 @@ In the expression `a * b` the subexpressions `l=a` and `r=b` do not involve oper
 
 In the expression `((1 + x) * 2)` we see that `l= ( 1 + x ),r=2, op=*`. The subexpression `l=( 1 + x )` has an operator `op2=+` and `op2(+)` has lower precedence than `op`. Hence parentheses are needed around `(1+ x)`. The subexpression `2` does not involve operators and hence no parentheses are needed.
 
+This gives us then end result `a * b + (1 + x) * 2`.
 
 ### Operators used and their precedence
 
