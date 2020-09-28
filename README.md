@@ -123,6 +123,22 @@ We also expect you to "pretty print" a simplified expression such as `( ( a * b 
 * `l` is an expression with an operator `op2` AND
 * `op2` has lower precedence than `op`
 
+Symmetrically, parentheses are needed around `r` if 
+* `r` is an expression with an operator `op2` AND
+* `op2` has lower precedence than `op`
+
+Let us consider an example: 
+```a * b + (1 + x) * 2```
+The expression with full parentheses is: `(a * b) + ((1 + x) * 2)`
+
+The toplevel expression is of the form `l op r` where `op=+, l = (a * b) and r = ((1+x) * 2)`. The left hand expression `l` is indeed an expression with an operators, `op2=*`, but `op2(*)` has higher precedence than `op(+)`, so no parentheses are needed around `l = (a * b)`.
+
+In the expression `a * b` the subexpressions `l=a` and `r=b` do not involve operators themselves, and hence no parentheses are needed around `a` and `b`.
+
+In the expression `((1 + x) * 2)` we see that `l= ( 1 + x ),r=2, op=*`. The subexpression `l=( 1 + x )` has an operator `op2=+` and `op2(+)` has lower precedence than `op`. Hence parentheses are needed around `(1+ x)`. The subexpression `2` does not involve operators and hence no parentheses are needed.
+
+This gives us then end result `a * b + (1 + x) * 2`.
+
 ### Operators used and their precedence
 
 | Operator | precedence level |
