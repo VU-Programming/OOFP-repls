@@ -101,10 +101,15 @@ For some expressions, such as `(x + (0 + (0 + 0)))` it is not enough to simplify
 3. Implement the Multiset calculator Repl by copying and modifying code from the Integer Repl and making sure it passes all the tests.
 4. Your code now works, but has a lot of duplicated code, which hinders maintenance and readability. Refactor your code, into REPL base, such that the common parts of both REPLs are shared.
 
-More detailed approach for constructing a REPL:
-1. Convert Infix expression to RPN using the Shunting yard algorithm (below).
-2. Convert RPN to a parse tree (where each node is an object of a case class) (an example of this is [here](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/OOReversePolish.scala), which is discussed in the last 3 videos of these [video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66))
-3. Simplify the parse tree using pattern matching video [video lectures](https://www.youtube.com/watch?v=d-4bKM8VEDQ&list=PLi-VVX8q87FKPlg-KeezbTb5v7VLqgk30)  [example of rewriting using pattern matching](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/PatternMatch.scala) and dynamic dispatch ([videos on dynamic dispatch]([video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66)).
+More detailed instructions for constructing a REPL:
+
+![expression construction before pattern matching](expression.svg)
+
+* Convert the infix expression to an Expression tree. Note that the expression tree is needed for simplifying the expressions, calculation on the expression could be done without the expression tree. 
+    Conversion of the infix expression to an expression tree is done in 2 steps (show in the picture above):
+    1. Convert Infix expression to RPN using the  Shunting yard algorithm (below).
+    2. Convert RPN to a expresion(parse) tree (where each node is an object of a case class) (an example of this is [here](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/OOReversePolish.scala), which is discussed in the last 3 videos of these [video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66))
+* Simplify the expression tree using pattern matching video [video lectures](https://www.youtube.com/watch?v=d-4bKM8VEDQ&list=PLi-VVX8q87FKPlg-KeezbTb5v7VLqgk30)  [example of rewriting using pattern matching](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/PatternMatch.scala) and dynamic dispatch ([videos on dynamic dispatch]([video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66)).
 
 ### Tokenization
 For parsing the input strings, you need to know the meaning of the characters. [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) is the processes of giving abstract parts meaning. For example, giving `+` the token of an operator. This can be used in combination with [pattern matching](#pattern-matching) for the [Shunting Yard algorithm](#shunting-yard-algorithm). You could match on the constants, variables, and operators, in an expression.
