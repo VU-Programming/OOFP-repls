@@ -342,6 +342,35 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
+    test("Simplify intersection by its abstract self compositie") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ (x + y + z) * ( x + y + z )")
+        val expected = "x + y + z"
+
+        assert(result == expected)
+    }
+
+    test("Simplify subtract abstract") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ (x + y + z) - ( x + y + z )")
+        val expected = "{}"
+
+        assert(result == expected)
+    }
+
+    test("Simplify subtract abstract nested") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("@ (x + y + z) - ( x + y + z ) * ( x + y + z) ")
+        val expected = "{}"
+
+        assert(result == expected)
+    }
+
+
+
     test("Simplify abstract brackets") {
         val repl = REPLFactory.makeMultiSetREPL()
 
@@ -354,7 +383,7 @@ class MultiSetReplTests extends TestBase {
     test("Simplify abstract advanced", weight = 5) {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        val result = repl.readEval("@ a + ( ( b * c ) * ( b * c ) )")
+        val result = repl.readEval("@ a + ( b * c ) * ( b * c )")
         val expected = "a + b * c"
 
         assert(result == expected)
@@ -379,53 +408,13 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
-    test("Simplify distributivity simple") {
-        val repl = REPLFactory.makeMultiSetREPL()
-
-        val result = repl.readEval("@ (a * b ) + (a * c)")
-        val expected = "a * ( b + c )"
-
-        assert(result == expected)
-    }
-
-    test("Simplify distributivity 2") {
-        val repl = REPLFactory.makeMultiSetREPL()
-
-        val result = repl.readEval("@ (b * ( {a} + x) ) + ( ( {a} + x) * c)")
-        val expected = "( {a} + x ) * ( b + c )"
-
-        assert(result == expected)
-    }
-
-
-    test("Simplify distributivity 3", weight = 3) {
-        val repl = REPLFactory.makeMultiSetREPL()
-
-        val result = repl.readEval("@ ( ( x + {b} ) * {a}) + ({a,b,c} * ( x + {b}) )")
-        val expected = "( x + {b} ) * {a,a,b,c}"
-
-        assert(result == expected)
-    }
-
-
-    test("Simplify distributivity 4") {
-        val repl = REPLFactory.makeMultiSetREPL()
-
-        val result = repl.readEval("@ b * a + c * a")
-        val expected = "a * ( b + c )"
-
-        assert(result == expected)
-    }
-
-
-
     test("Simplify advanced",weight = 10) {
         val repl = REPLFactory.makeMultiSetREPL()
 
         repl.readEval("z = {a,b,b}")
         repl.readEval("q = {a}")
-        val result = repl.readEval("@ {} + ( ( b + {} )  * (a + {} ) + (c * c) * (a * a)) * ( ( a * b ) + ( a * c ) + ( (z + q) * {} ) )")
-        val expected = "a * ( b + c )"
+        val result = repl.readEval("@ ( x - x ) + ( a * b + a * c ) - ( ( ( a + {} ) * ( b + {} )   + ( a * a ) * ( c * c ) ) * ( ( a * b ) + ( a * c ) + ( (z + q) * {} ) ) )")
+        val expected = "{}"
 
         assert(result == expected)
     }
@@ -465,7 +454,7 @@ class MultiSetReplTests extends TestBase {
         repl.readEval("b = a * {a,b}")
         repl.readEval("c = b + ( a * {c,b} )")
 
-        val result = repl.readEval("@ ( ( ( a * b ) + ( {a} * b ) ) + c ) + d")
+        val result = repl.readEval("@  ( ( a * b  +  {a} * b  ) + c ) + d")
         val expected = "{a,a,a,c} + d"
 
         assert(result == expected)

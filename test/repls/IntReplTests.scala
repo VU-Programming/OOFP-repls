@@ -1,3 +1,4 @@
+
 // DO NOT MODIFY THIS FILE
 package repls
 
@@ -350,6 +351,25 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
+    test("Simplify subtract abstract") {
+        val repl = REPLFactory.makeIntREPL()
+
+        val result = repl.readEval("@ (x + y + z) - ( x + y + z )")
+        val expected = "0"
+
+        assert(result == expected)
+    }
+
+    test("Simplify subtract abstract nested") {
+        val repl = REPLFactory.makeIntREPL()
+
+        val result = repl.readEval("@ (x + y + z) - ( ( x + y + z ) + 0 )")
+        val expected = "0"
+
+        assert(result == expected)
+    }
+
+
 
     test("Simplify abstract brackets") {
         val repl = REPLFactory.makeIntREPL()
@@ -416,6 +436,18 @@ class IntReplTests extends TestBase {
         assert(result == expected)
     }
 
+    test("Simplify advanced 2",weight = 5) {
+        val repl = REPLFactory.makeIntREPL()
+
+        repl.readEval("z = 12")
+        repl.readEval("q = 7")
+        val result = repl.readEval("@ (x - x) + ( ( b + 0 )  * (a + 0 ) + c * a ) - ( ( a * b ) + ( a * c ) + ( (z + q) * 0 ) )")
+        val expected = "0"
+
+        assert(result == expected)
+    }
+
+
     /*
     Simplification with assigned variables
      */
@@ -447,7 +479,7 @@ class IntReplTests extends TestBase {
         repl.readEval("b = a * 4")
         repl.readEval("c = b + ( a * 5 )")
 
-        val result = repl.readEval("@ ( ( ( a * b ) + ( c * b ) ) * 2 ) + d")
+        val result = repl.readEval("@ ( a * b + c * b ) * 2 + d")
         val expected = "720 + d"
 
         assert(result == expected)

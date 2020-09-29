@@ -62,15 +62,6 @@ You will implement three multiset operations:
 
 When simplifying an expression, you should employ the following rules:
 
-**Distributivity:**
-
-The following rules apply both to the integer repl and the multiset repl. 
-
-- `( a * b ) + ( a * c ) → a * ( b + c )`
-- `( b * a ) + ( a * c ) → a * ( b + c )`
-- `( a * b ) + ( c * a ) → a * ( b + c )`
-- `( b * a ) + ( c * a ) → a * ( b + c )`
-
 **Rules for Integer calculator REPL:**
 
 - `0 + e → e`
@@ -79,6 +70,13 @@ The following rules apply both to the integer repl and the multiset repl.
 - `e * 1 → e`
 - `e * 0 → 0`
 - `0 * e → 0`
+- `e - e -> 0`
+
+Distributivity rules : 
+- `( a * b ) + ( a * c ) → a * ( b + c )`
+- `( b * a ) + ( a * c ) → a * ( b + c )`
+- `( a * b ) + ( c * a ) → a * ( b + c )`
+- `( b * a ) + ( c * a ) → a * ( b + c )`
 
 **Rules for Multiset calculator REPL:**
 
@@ -87,6 +85,7 @@ The following rules apply both to the integer repl and the multiset repl.
 - `e * {} → {}`
 - `e + {} → e`
 - `{} + e → e`
+- `e - e -> {}`
 
 **Nested application of rules**
 

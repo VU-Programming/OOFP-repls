@@ -8,7 +8,8 @@ import repls.MultiSet.empty
     {a,a,a,b,c,c} = Map('a'->3, 'b'->1, 'c'->2)
  */
 
-case class MultiSet[T](elements: Map[T, Int]) {
+
+case class MultiSet[T] (multiplicity: Map[T, Int]) {
 
     /* TODO
         Intersection of two multisets:
@@ -35,17 +36,19 @@ case class MultiSet[T](elements: Map[T, Int]) {
     def -(that: MultiSet[T]): MultiSet[T] = empty[T]
     /* TODO
         Make sure a multiset can be returned as a sequence.
+
+        For example the multiset {a,a,b} should give the sequence Seq(a,a,b).
+
+        The order of the elements in the sequence does not matter.
      */
     def toSeq: Seq[T] = {
         Seq.empty
     }
 
-    /* TODO
-        Have a suitable string representation. Make sure it follows the style we use in the examples.
-     */
-    override def toString: String = {
-        ""
-    }
+    // A toString has already been provided and relies on toSeq
+    override def toString: String =
+        "{" + toSeq.map(_.toString).sorted.mkString(",") + "}"
+
 }
 
 object MultiSet {
