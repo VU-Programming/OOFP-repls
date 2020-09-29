@@ -6,7 +6,7 @@ class IntREPL extends REPLBase {
     override val replName: String = "" // TODO: name me!
 
     override def readEval(command: String): String = {
-        val x = command.split("\\s")
+        val elements = command.split("\\s") // split string based on whitespace
         // TODO: complete me!
         ""
     }
