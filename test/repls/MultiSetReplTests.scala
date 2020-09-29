@@ -345,7 +345,7 @@ class MultiSetReplTests extends TestBase {
     test("Simplify intersection by its abstract self compositie") {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        val result = repl.readEval("@ (x + y + z) * ( x + y + z )")
+        val result = repl.readEval("@ ( x + y + z ) * ( x + y + z )")
         val expected = "x + y + z"
 
         assert(result == expected)
@@ -354,7 +354,7 @@ class MultiSetReplTests extends TestBase {
     test("Simplify subtract abstract") {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        val result = repl.readEval("@ (x + y + z) - ( x + y + z )")
+        val result = repl.readEval("@ ( x + y + z ) - ( x + y + z )")
         val expected = "{}"
 
         assert(result == expected)
@@ -363,7 +363,7 @@ class MultiSetReplTests extends TestBase {
     test("Simplify subtract abstract nested") {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        val result = repl.readEval("@ (x + y + z) - ( x + y + z ) * ( x + y + z) ")
+        val result = repl.readEval("@ ( x + y + z ) - ( x + y + z ) * ( x + y + z )")
         val expected = "{}"
 
         assert(result == expected)
@@ -413,7 +413,7 @@ class MultiSetReplTests extends TestBase {
 
         repl.readEval("z = {a,b,b}")
         repl.readEval("q = {a}")
-        val result = repl.readEval("@ ( x - x ) + ( a * b + a * c ) - ( ( ( a + {} ) * ( b + {} )   + ( a * a ) * ( c * c ) ) * ( ( a * b ) + ( a * c ) + ( (z + q) * {} ) ) )")
+        val result = repl.readEval("@ ( x - x ) + ( a * b + a * c ) - ( ( ( a + {} ) * ( b + {} ) + ( a * a ) * ( c * c ) ) * ( ( a * b ) + ( a * c ) + ( ( z + q ) * {} ) ) )")
         val expected = "{}"
 
         assert(result == expected)
@@ -454,7 +454,7 @@ class MultiSetReplTests extends TestBase {
         repl.readEval("b = a * {a,b}")
         repl.readEval("c = b + ( a * {c,b} )")
 
-        val result = repl.readEval("@  ( ( a * b  +  {a} * b  ) + c ) + d")
+        val result = repl.readEval("@ ( ( a * b + {a} * b ) + c ) + d")
         val expected = "{a,a,a,c} + d"
 
         assert(result == expected)
