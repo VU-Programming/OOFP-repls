@@ -278,7 +278,7 @@ class MultiSetReplTests extends TestBase {
     test("Simplify trailing empty set", weight = 2) {
         val repl = REPLFactory.makeMultiSetREPL()
 
-        val result = repl.readEval("@ ( {g,h} + ( {b,n,n} * {b,n,n} ) ) * {a,a,e,r} + ( {u,u,i.p} * {} )")
+        val result = repl.readEval("@ ( {g,h} + ( {b,n,n} * {b,n,n} ) ) * {a,a,e,r} + ( {u,u,i,p} * {} )")
         val expected = "{}"
 
         assert(result == expected)
