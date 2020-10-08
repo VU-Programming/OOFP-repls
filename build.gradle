@@ -28,6 +28,7 @@ sourceSets.main.scala.srcDirs = ['src']
 sourceSets.test.scala.srcDirs = ['test']
 
 dependencies {
+    compile "org.scala-lang:scala-compiler:${scalaVersion}"
     compile "org.scala-lang:scala-library:${scalaVersion}"
     compile fileTree(include: ['*.jar'], dir: 'lib')
     testImplementation("junit:junit:4.13")
@@ -118,4 +119,11 @@ task fraction4_2(type: JavaExec, dependsOn: classes) {
     classpath sourceSets.test.runtimeClasspath
     classpath sourceSets.main.runtimeClasspath
     classpath configurations.runtime
+}
+
+task repl(type:JavaExec) {
+    main = "scala.tools.nsc.MainGenericRunner"
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput System.in
+    args '-usejavacp'
 }
