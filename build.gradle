@@ -127,3 +127,16 @@ task repl(type:JavaExec) {
     standardInput System.in
     args '-usejavacp'
 }
+
+// The path of the scala-compiler jar
+def scalaPath = buildscript.configurations.classpath.find {
+    it.name == "scala-compiler-${scalaVersion}.jar"
+}
+
+// The classpath of this project and its dependencies
+def classpath = sourceSets.main.runtimeClasspath.asPath
+
+// Prints the classpath needed to launch the REPL
+task printClasspath {
+    println "${scalaPath}:${classpath}"
+}
