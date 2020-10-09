@@ -91,7 +91,7 @@ Distributivity rules :
 
 For some expressions, such as `(x + (0 + (0 + 0)))` it is not enough to simplify the top-level and then recursively simplify the sub-parts (this is called simplifying top-down). In this case we will then end up with `x + (0 + 0))` instead of `x + 0`. To solve this, choose one of two tactics:
 * Simplify *bottom-up*: first simplify the sub-parts of the expression, before simplifying the whole. 
-* Simplify until you reach a *fixpoint*. Apply rules in top-down fashion until the expression does not change anymore. 
+* Simplify until you reach a *fixpoint*. Apply rules in top-down fashion repeatedly until the expression does not change anymore. 
 
 
 ## Suggested approach:
