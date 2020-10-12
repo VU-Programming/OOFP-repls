@@ -222,7 +222,9 @@ For more information visit the scala docs [here](https://docs.scala-lang.org/tou
 There are 2 assignments for these repls:
 ### 4.1 Assignment 4.1 IntREPL + MultiSet 
 
-Implement the IntREPL and the implement the MultiSet (not the MultiSet *REPL*) To pass this assignment, you need to get at least 48 points from the ReplsTestSuite4_1 test suite (not all tests are valued equally, as indicated by the weight argument after test name)
+Implement the IntREPL and the implement the MultiSet (not the MultiSet *REPL*) To pass this assignment, you need to get at least 48 points (40% of total points) from the ReplsTestSuite4_1 test suite (not all tests are valued equally, as indicated by the weight argument after test name). 
+
+Note that unlike the previous assignments, not all tests are an equal number of points, some tests weigh more than others. In the test code, if no `weight` argument is given to `test` then the weight of that test is 1.
 
 ### 4.2 Assignment 4.2 MultiSetRepl + Sharing
 
