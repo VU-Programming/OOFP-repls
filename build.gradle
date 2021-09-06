@@ -1,4 +1,3 @@
-import org.codehaus.groovy.runtime.GStringImpl
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
@@ -13,8 +12,7 @@ test {
 
 ext {
     scalaMajorVersion = '2.13'
-    scalaVersion = "${scalaMajorVersion}.6" as GStringImpl
-}
+    scalaVersion = "${scalaMajorVersion}.6"
 
 repositories {
     flatDir {
