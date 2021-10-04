@@ -177,7 +177,7 @@ class MultiSetTests extends TestBase {
     /*
     Expressions
      */
-    test("Multiset expressions numeric", weight = 5) {
+    test("Multiset expressions numeric", weight = 2) {
         assertResult(Seq(2,3)) {
             val first = MultiSet(Seq(1,2,3,4,4,4))
             val second = MultiSet(Seq(1,4,5,5,5))
@@ -188,7 +188,7 @@ class MultiSetTests extends TestBase {
         }
     }
 
-    test("Multiset expression characters", weight = 5) {
+    test("Multiset expression characters", weight = 2) {
         assertResult(Seq('d','d','i','o')) {
             val first = MultiSet(Seq('d','d','d','g','h','i','i','i','o'))
             val second = MultiSet(Seq('a','b','d','g','i','i'))
@@ -196,6 +196,32 @@ class MultiSetTests extends TestBase {
             val fourth = MultiSet(Seq('d','d','i','i','o','o','p','p'))
 
             ((first - second) * third * fourth).toSeq.sorted
+        }
+    }
+
+    test("Large Multiset 1", weight = 3) {
+        assertResult(Map(("bye",Int.MaxValue),("hello",Int.MaxValue),("bla", Int.MaxValue/2))){
+            val a = MultiSet(Map(("hello", Int.MaxValue),("bla",Int.MaxValue/2)))
+            val b = MultiSet(Map(("bye", Int.MaxValue)))
+            (a + b).multiplicity
+        }
+    }
+
+    test("Large Multiset 2", weight = 3) {
+        assertResult(Map(("hello",Int.MaxValue))){
+            val a = MultiSet(Map(("hello", Int.MaxValue),("bla",Int.MaxValue/2)))
+            val b = MultiSet(Map(("hello", Int.MaxValue)))
+            (a * b).multiplicity
+        }
+    }
+
+    test("Large Multiset 3", weight = 5) {
+        assertResult(Map(("hello",Int.MaxValue), ("zozo",Int.MaxValue), ("bla",Int.MaxValue/2 + 100000))){
+            val a = MultiSet(Map(("hello", Int.MaxValue),("bla",Int.MaxValue/2), ("jada",Int.MaxValue)))
+            val b = MultiSet(Map(("hello", Int.MaxValue),("jada",Int.MaxValue)))
+            val c= MultiSet(Map(("hello", Int.MaxValue),("bla",Int.MaxValue)))
+            val d = MultiSet(Map(("hello", Int.MaxValue),("zozo", Int.MaxValue),("bla",100000)))
+            (((a - b) * c) + d).multiplicity
         }
     }
 }
