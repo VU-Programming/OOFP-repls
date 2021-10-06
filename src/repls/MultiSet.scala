@@ -45,9 +45,10 @@ case class MultiSet[T] (multiplicity: Map[T, Int]) {
         Seq.empty
     }
 
-    // A toString has already been provided and relies on toSeq
-    override def toString: String =
-        "{" + toSeq.map(_.toString).sorted.mkString(",") + "}"
+    // A toString has already been provided
+    override def toString: String = "{"+ multiplicity.mkString(",") + "}"
+
+
 
 }
 

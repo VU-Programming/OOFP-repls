@@ -60,26 +60,7 @@ class MultiSetTests extends TestBase {
         }
     }
 
-    /*
-    Stringify
-     */
-    test("toString representation empty") {
-        assertResult("{}") {
-            MultiSet(Seq.empty).toString
-        }
-    }
 
-    test("toString representation numbered") {
-        assertResult("{1,1,2}") {
-            MultiSet(Seq(1,1,2)).toString
-        }
-    }
-
-    test("toString representation characters") {
-        assertResult("{a,a,a,b,c}") {
-            MultiSet(Seq('a','b','c','a','a')).toString
-        }
-    }
 
     /*
     Summation
