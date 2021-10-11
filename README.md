@@ -241,7 +241,7 @@ Grading is mostly based on how much code is reused, and is built up as follows:
     * Sharing of the commonalities in parsing expressions (string -> Expression)) 0.5 points
     * Sharing of the commonalities in evaluating expressions 0.5 points
 
-    * Sharing of the commonalities in simplifying expressions 0.5
+    * Sharing of the commonalities in simplifying expressions 0.5. Note: You cannot get these points if you do not use pattern matching for rewriting.
 * Code style 2 points
 * Do NOT use regular expressions instead of pattern matching for rewriting. Using regular expressions for rewriting will give you 0 style points.
 
