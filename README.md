@@ -247,38 +247,5 @@ Grading is mostly based on how much code is reused, and is built up as follows:
 
 Total : 10 points
 
-Note that to get full points for sharing code, the common code needs to go in `REPLBase` and need to have extension points (e.g. abstract methods) such that you can easily add repls by subclassing `REPLBase`.  The `REPLBase` code should not have any code specific to the Integer or Multiset REPL (this should be in their respective classes). It should for example be possible to add another repl which centers around `Booleans` *without* modifying the `REPLBase` code. Hence you will for example not get full points if you have in REPLBase that checks via `if` statements or something similar whether it is handling Ints or Multisets.
+Note that to get full points for sharing code, the common code needs to go in `REPLBase` and need to have extension points (e.g. abstract methods) such that you can easily add repls by subclassing `REPLBase`.  The `REPLBase` code should not have any code specific to the Integer or Multiset REPL (this should be in their respective classes). It should for example be possible to add another repl which centers around `Booleans` *without* modifying the `REPLBase` code. For booleans, you can assume that the rules involving zero (as seen in the IntREPL/MultisetREPL) hold, but not distributivity or `e * e = e`. Hence you will for example not get full points if you have in REPLBase that checks via `if` statements or something similar whether it is handling Ints or Multisets.
 
-## Math aside
-
-If you are intrested in the common structure between Integers, MultiSets and Boolean it, is called a [ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) in mathematics. A ring is any set A with the following:
-* A binary operation called + and a binary operation called *
-* A unary negation operation (unary = with one argument) called -. For example in Integers, you can negate 3 to get -3.
-* An element called 0 and element called 1
-
-Such that the following rules hold:
-* A with `+` and `0` form a monoid (additive monoid)
-* A with `*` and `1` also forms a monoid (multiplicative monoid)
-* `+` is commutative: `a + b = b + a` forall a b in A
-* Multiplication is distributive with respect to addition, that is
-    * `a * (b + c) = (a * b) + (a * c)` for all a, b, c in A
-    * `(b + c) * a = (b * a) + (c * a)` for all a, b, c in A
-* `-a` is the additive inverse of a. That is: `a + (-a) = 0` forall a.
-You can then define a binary operation - as `a - b = a + (-b)`
-
-For Integers, `+`,`*`,`-`,`0` and `1` are defined (unsuprisingly) as `+`,`*`,`-`,`0` and `1`. For Multisets:
-* `0` = Empty multiset
-* `1` = Multiset containing everything infinitely often (you do not have to implement this)
-* `+` = Multiset union
-* `*` = Multiset intersection
-* Negation = Negating the multiplicity of all elements. For example, the multiset `{a -> 2, b -> 3}` becomes the multiset `{a -> -2, b -> -3}`. For this you need to allow multisets with negative occurances.
-
-For Booleans, `+`,`*`,`-`,`0` and `1`  are defined as for the ring modulo 2. That is:
-* `0` = False
-* `1` = True
-* `+` = XOR (not OR)
-* `*` = AND
-* `Negation` = Identity function. `-a = a` 
-(You can check that the rules above actually hold for this.)
-
-The only rule above that is specific to Multisets or Ints, is `e * e = e` for Multisets.
