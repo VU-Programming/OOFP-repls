@@ -1,5 +1,4 @@
-
-## Math aside
+## Extra Hardcore Optional Math
 
 If you are intrested in the common structure between Integers, MultiSets and Booleans, it is called a [ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) in mathematics. A ring is any set A with the following:
 * A binary operation called + and a binary operation called *
