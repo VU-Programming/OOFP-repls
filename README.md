@@ -249,6 +249,8 @@ Total : 10 points
 
 Note that to get full points for sharing code, the common code needs to go in `REPLBase` and need to have extension points (e.g. abstract methods) such that you can easily add repls by subclassing `REPLBase`.  The `REPLBase` code should not have any code specific to the Integer or Multiset REPL (this should be in their respective classes). It should for example be possible to add another repl which centers around `Booleans` *without* modifying the `REPLBase` code. Hence you will for example not get full points if you have in REPLBase that checks via `if` statements or something similar whether it is handling Ints or Multisets.
 
+## Math aside
+
 If you are intrested in the common structure between Integers, MultiSets and Boolean it, is called a [ring](https://en.wikipedia.org/wiki/Ring_(mathematics)) in mathematics. A ring is any set A with the following:
 * A binary operation called + and a binary operation called *
 * A unary negation operation (unary = with one argument) called -. For example in Integers, you can negate 3 to get -3.
