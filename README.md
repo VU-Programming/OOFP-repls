@@ -253,7 +253,8 @@ If you are intrested in the common structure between Integers, MultiSets and Boo
 * A binary operation called + and a binary operation called *
 * A unary negation operation (unary = with one argument) called -. For example in Integers, you can negate 3 to get -3.
 * An element called 0 and element called 1
-Such that:
+
+Such that the following rules hold:
 * A with + and 0 form a monoid (additive monoid)
 * A with * and 1 also forms a monoid (multiplicative monoid)
 * + is commutative: a + b = b + a forall a b in A
@@ -276,3 +277,4 @@ For Booleans, +, *,-,0 and 1 are defined as for the ring modulo 2. That is:
 * + = XOR (not OR)
 * * = AND
 * Negation = Identity function. -a = a 
+(You can check that the rules above actually hold for this.)
