@@ -110,6 +110,8 @@ More detailed instructions for constructing a REPL:
     2. Convert RPN to a expresion(parse) tree (where each node is an object of a case class) (an example of this is [here](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/OOReversePolish.scala), which is discussed in the last 3 videos of these [video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66))
 * Simplify the expression tree using pattern matching video [video lectures](https://www.youtube.com/watch?v=d-4bKM8VEDQ&list=PLi-VVX8q87FKPlg-KeezbTb5v7VLqgk30)  [example of rewriting using pattern matching](https://gitlab.com/vu-oofp/lecture-code/-/blob/master/PatternMatch.scala) and dynamic dispatch ([videos on dynamic dispatch]([video lectures](https://www.youtube.com/playlist?list=PLi-VVX8q87FIzFCmzXCc_JZZJkvW80C66)).
 
+*Important*: Do NOT use regular expressions instead of pattern matching for rewriting. Using regular expressions for rewriting will immediatly give you 0 style points.
+
 ### Tokenization
 For parsing the input strings, you need to know the meaning of the characters. [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) is the processes of giving abstract parts meaning. For example, giving `+` the token of an operator. This can be used in combination with [pattern matching](#pattern-matching) for the [Shunting Yard algorithm](#shunting-yard-algorithm). You could match on the constants, variables, and operators, in an expression.
 
@@ -239,9 +241,11 @@ Grading is mostly based on how much code is reused, and is built up as follows:
     * Sharing of the commonalities in parsing expressions (string -> Expression)) 0.5 points
     * Sharing of the commonalities in evaluating expressions 0.5 points
 
-    * Sharing of the commonalities in simplifying expressions 0.5
+    * Sharing of the commonalities in simplifying expressions 0.5. Note: You cannot get these points if you do not use pattern matching for rewriting.
 * Code style 2 points
+* Do NOT use regular expressions instead of pattern matching for rewriting. Using regular expressions for rewriting will give you 0 style points.
 
 Total : 10 points
 
-Note that to get full points for sharing code, the common code needs to go in `REPLBase` and need to have extension points (e.g. abstract methods) such that you can easily add repls by subclassing `REPLBase`.  The `REPLBase` code should not have any code specific to the Integer or Multiset REPL (this should be in their respective classes). It should for example be possible to add another repl which centers around `Booleans` *without* modifying the `REPLBase` code. Hence you will for example not get full points if you have in REPLBase that checks via `if` statements or something similar whether it is handling Ints or Multisets.
+Note that to get full points for sharing code, the common code needs to go in `REPLBase` and need to have extension points (e.g. abstract methods) such that you can easily add repls by subclassing `REPLBase`.  The `REPLBase` code should not have any code specific to the Integer or Multiset REPL (this should be in their respective classes). It should for example be possible to add another repl which centers around `Booleans` *without* modifying the `REPLBase` code. For booleans, you can assume that the rules involving zero (as seen in the IntREPL/MultisetREPL) hold, but not distributivity or `e * e = e`. Hence you will for example not get full points if you have in REPLBase that checks via `if` statements or something similar whether it is handling Ints or Multisets.
+
