@@ -12,7 +12,7 @@ test {
 
 ext {
     scalaMajorVersion = '2.13'
-    scalaVersion = '2.13.8'
+    scalaVersion = '2.13.3'
 }
 
 
@@ -29,17 +29,17 @@ sourceSets.test.scala.srcDirs = ['test']
 
 dependencies {
     implementation "org.scala-lang:scala-library:${scalaVersion}"
-    compile fileTree(include: ['*.jar'], dir: 'lib')
+    implementation fileTree(include: ['*.jar'], dir: 'lib')
     testImplementation('junit:junit:4.13.2')
-    testCompile('org.junit.vintage:junit-vintage-engine:5.9.0')
-    testCompile "org.scalatest:scalatest_${scalaMajorVersion}:3.0.9"
+    testImplementation('org.junit.vintage:junit-vintage-engine:5.9.0')
+    testImplementation "org.scalatest:scalatest_${scalaMajorVersion}:3.0.8"
 }
 
 
 
 task(runIntREPL, dependsOn: 'classes', type: JavaExec) {
     group = "Runnables"
-    main = "repls.RunREPL"
+    mainClass.set("repls.RunREPL")
     classpath = sourceSets.main.runtimeClasspath
     args "IntREPL"
     standardInput = System.in
@@ -48,7 +48,7 @@ task(runIntREPL, dependsOn: 'classes', type: JavaExec) {
 
 task(runMultiSetREPL, dependsOn: 'classes', type: JavaExec) {
     group = "Runnables"
-    main = "repls.RunREPL"
+    mainClass.set("repls.RunREPL")
     classpath = sourceSets.main.runtimeClasspath
     args "MultiSetREPL"
     standardInput = System.in
@@ -70,7 +70,7 @@ task zip(type: Zip) {
     include 'src/repls/**.scala'
 
     archiveFileName = 'repls.zip'
-    destinationDir(file("$projectDir"))
+    destinationDirectory = layout.buildDirectory.dir("$projectDir")
 }
 
 
@@ -106,27 +106,22 @@ task test4_2(type: Test) {
 task fraction4_1(type: JavaExec, dependsOn: classes) {
     // To make sure you can always run this task
     outputs.upToDateWhen { false }
-    main = 'repls.infrastructure.ReportFraction4_1'
+    mainClass.set('repls.infrastructure.ReportFraction4_1')
     classpath sourceSets.test.runtimeClasspath
     classpath sourceSets.main.runtimeClasspath
-    classpath configurations.runtime
+    //classpath configurations.runtime
 }
 
 task fraction4_2(type: JavaExec, dependsOn: classes) {
     // To make sure you can always run this task
     outputs.upToDateWhen { false }
-    main = 'repls.infrastructure.ReportFraction4_2'
+    mainClass.set('repls.infrastructure.ReportFraction4_2')
     classpath sourceSets.test.runtimeClasspath
     classpath sourceSets.main.runtimeClasspath
-    classpath configurations.runtime
+    //classpath configurations.runtime
 }
 
-task repl(type:JavaExec) {
-    main = "scala.tools.nsc.MainGenericRunner"
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput System.in
-    args '-usejavacp'
-}
+
 
 // The path of the scala-compiler jar
 def scalaPath = buildscript.configurations.classpath.find {
