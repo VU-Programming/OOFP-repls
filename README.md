@@ -32,7 +32,7 @@ Unkown variable: m
 ```
 
 ## MultiSets
-A multiset is like a set, but allows for duplicates. The number of instances of an element, `x` in a multiset `a` is
+A multiset is a mathematical structure which is like a set, but allows for duplicates. The number of instances of an element, `x` in a multiset `a` is
  called
  its *multiplicity*, written   <code>m<sub>a</sub>(x) </code>. For example, in the multiset `{ a, a, a, b, a }`, `a
  ` has a multiplicity of 4, and `b
