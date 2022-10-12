@@ -216,6 +216,8 @@ abstract class REPLBase extends REPL {
 
 For the IntREPL, `Base` has been specified to be `Int`, so this function would return an `Int`, and a `MultiSet` for the MultiSetREPL. This way, a function or variables can be shared while returning different types.
 
+Hint: As you want an expression tree which has `Base` elements as constants, it can make things easier to make your expression class and its subclasses nested classes in `REPLBase`.
+
 For more information visit the scala docs [here](https://docs.scala-lang.org/tour/abstract-type-members.html).
 
 
