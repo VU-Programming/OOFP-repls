@@ -14,7 +14,7 @@ The REPLs have three types of command:
   m = 2). If you encounter a variable in the input, as in the example above, you need to the value associated with
    that variable. If a variable does not have a value (it is unbound), then the input for variable assignment is
     incorrect. Hence, we can only bind variables to constants (not to expressions).
-- **Expression Simplification:** If the input starts with an "@" then the REPL should simplify the expression after the "@" according to the [rules below](#simplification-rules). For example, `@ ( ( n * 2 ) + ( n * 3 ) ) + a * b` should give `n * 5 + a * b`. Notice that we compute the `n * (2 + 3) = n * 5`, you should do the same. Notice that you do not have to simplify `5 * n * m * 3` to `15 * n * m`. 
+- **Expression Simplification:** If the input starts with an "@" then the REPL should simplify the expression after the "@" according to the [rules below](#simplification-rules). For example, `@ ( ( n * 2 ) + ( n * 3 ) ) + a * b` should give `n * 5 + a * b`. This follows by first applying distributivity and then computing `n * (2 + 3) = n * 5`, you should do the same. Notice that you do not have to simplify `5 * n * m * 3` to `15 * n * m`, you only compute if the two constant are arguments to the same operators, such as in `(3 * 2)`. 
 
 Note that evaluation and simplification only differ when dealing with unbound variables. Evaluating unbound variables
  give an error, but simplifying expression with unbound variables does not.  Bound variables should be treated as
