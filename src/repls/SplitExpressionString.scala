@@ -20,9 +20,10 @@ object SplitExpressionString {
   negative number parsing:
   89-ff -> (89,-,ff)
   b - 11 -> (b, - , 11)
-  if - directly borders on a character or digit on the right, but not on the left, is included in the string on the right
+  if - directly borders on a digit on the right, but not on the left, is included in the string on the right
   b + -11 -> (b,+,-11)
-  42 * -a -> (42,*,-a)
+ if - directly borders on a letter on the right, it is a seperate string 
+ n-n -> (n,-,n)
 
   set parsing: everything between { and } is taken as a single literal string
 
