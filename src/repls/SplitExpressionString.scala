@@ -54,8 +54,6 @@ object SplitExpressionString {
           case '{' => {addNonemptyStringAndReset() ; inLiteral = true; curString = "{" }
             // This part of the expression is done
           case ' ' | '\t' => addNonemptyStringAndReset()
-            // If negative
-          case '-' if curString.isEmpty => { addNonemptyStringAndReset(); curString = "-" }
             // Handle subtraction separately
           case '-' if curString.nonEmpty => { addNonemptyStringAndReset(); builder.addOne(character.toString) }
             // Is operator
