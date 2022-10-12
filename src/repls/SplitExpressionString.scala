@@ -50,21 +50,26 @@ object SplitExpressionString {
         }
       } else {
         character match {
-            // Start splitting for multiset representation
+          // Start splitting for multiset representation
           case '{' => {addNonemptyStringAndReset() ; inLiteral = true; curString = "{" }
-            // This part of the expression is done
+          // This part of the expression is done
           case ' ' | '\t' => addNonemptyStringAndReset()
-            // If negative
+          // If negative
           case '-' if curString.isEmpty => { addNonemptyStringAndReset(); curString = "-" }
-            // Handle subtraction separately
+          // Handle subtraction separately
           case '-' if curString.nonEmpty => { addNonemptyStringAndReset(); builder.addOne(character.toString) }
-            // Is operator
+          // Is operator
           case '(' | ')' | ',' | '+' | '*' | '=' | '@' => {
             addNonemptyStringAndReset(); builder.addOne(character.toString)
           }
-            // Add character or number to the string
+          case _ if character.isDigit && curString == "-" =>  curString += character
+          case _ if character.isLetter && curString == "-" => {
+            addNonemptyStringAndReset()
+            curString = "" + character
+          }
+          // Add character or number to the string
           case _ if character.isLetterOrDigit => curString += character
-            // Base:
+          // Base:
           case _ => throw new Exception("Do not know how to parse " + character)
         }
       }
