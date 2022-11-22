@@ -52,6 +52,14 @@ class MultiSetReplTests extends TestBase {
         assert(result == expected)
     }
 
+    test("Evaluate summation longer names") {
+        val repl = REPLFactory.makeMultiSetREPL()
+
+        val result = repl.readEval("( {a2,a4,a5} + {a1,a2,a3,a4,a5} ) + ( {a1,a2,a3,a5} + {a1,a3} + {a1,a2,a3,a5} )")
+        val expected = "{a1,a1,a1,a1,a2,a2,a2,a2,a3,a3,a3,a3,a4,a4,a5,a5,a5,a5}"
+
+        assert(result == expected)
+    }
 
     /*
     Evaluating with subtraction
