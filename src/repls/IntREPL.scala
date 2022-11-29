@@ -3,7 +3,7 @@ package repls
 class IntREPL extends REPLBase {
     // Have a REPL of type Int
     type Base = Int
-    override val replName: String = "ints" // TODO: name me!
+    override val replName: String = "int-repl"
 
     override def readEval(command: String): String = {
         val elements = command.split("\\s") // split string based on whitespace
