@@ -1,12 +1,12 @@
-# Advanced Programming: REPL Calculators
+# REPL Calculators
 
 *Required knowledge*: To make this assignment, you need to be up to speed on the lecture up to and including pattern matching.
 
-**NOTE** This assignment is different from the previous assignments in that it **requires** you to use advanced scala techniques such as pattern matching. The consensus among the TAs is that it is _**much harder**_ than the other assignments. Start early!!
+**NOTE** This assignment is different from the previous assignments in that it **requires** you to use scala techniques such as pattern matching. The consensus among the TAs is that it is _**much harder**_ than the other assignments. Start early!!
 
-In this exercise you will be making two calculators [REPLs](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop). The first of these is a regular calculator dealing with integers, the second operates on [MultiSets](#multisets). A lot of the techniques discussed in this course are useful to enable code reuse and this assignment gives you ample opportunity to employ these techniques since both REPLs have very similar functionality.
+In this exercise, you will be making two calculators [REPLs](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop). The first of these is a regular calculator dealing with integers, the second operates on [MultiSets](#multisets). A lot of the techniques discussed in this course are useful to enable code reuse and this assignment gives you ample opportunity to employ these techniques since both REPLs have very similar functionality.
  
-The REPLs have three types of command:
+The REPLs have three types of commands:
 
 - **Expression Evaluation:** If the input is an expression (for example: `1 + 4 * 3 + 5`) then the output should be its result (18 in this example)
 - **Variable Assignment:** If the input is an assignment (for example: `n = 18 * m * 2 + 5`, the REPL should store
@@ -14,10 +14,10 @@ The REPLs have three types of command:
   m = 2). If you encounter a variable in the input, as in the example above, you need to the value associated with
    that variable. If a variable does not have a value (it is unbound), then the input for variable assignment is
     incorrect. Hence, we can only bind variables to constants (not to expressions).
-- **Expression Simplification:** If the input starts with an "@" then the REPL should simplify the expression after the "@" according to the [rules below](#simplification-rules). For example, `@ ( ( n * 2 ) + ( n * 3 ) ) + a * b` should give `n * 5 + a * b`. This follows by first applying distributivity and then computing `n * (2 + 3) = n * 5`, you should do the same. Notice that you do not have to simplify `5 * n * m * 3` to `15 * n * m`, you only compute if the two constant are arguments to the same operators, such as in `(3 * 2)`. 
+- **Expression Simplification:** If the input starts with an "@" then the REPL should simplify the expression after the "@" according to the [rules below](#simplification-rules). For example, `@ ( ( n * 2 ) + ( n * 3 ) ) + a * b` should give `n * 5 + a * b`. This follows by first applying distributivity and then computing `n * (2 + 3) = n * 5`, you should do the same. Notice that you do not have to simplify `5 * n * m * 3` to `15 * n * m`, you only compute if the two constants are arguments to the same operators, such as in `(3 * 2)`. 
 
 Note that evaluation and simplification only differ when dealing with unbound variables. Evaluating unbound variables
- give an error, but simplifying expression with unbound variables does not.  Bound variables should be treated as
+ gives an error, but simplifying expression with unbound variables does not.  Bound variables should be treated as
   their corresponding value both when
   simplifying and evaluating. For example:
 ```
@@ -66,11 +66,13 @@ When simplifying an expression, you should employ the following rules:
 
 - `0 + e → e`
 - `e + 0 → e`
+- `0 * e → 0`
+- `e * 0 → 0`
+  
+- `e - e → 0`
+  
 - `1 * e → e`
 - `e * 1 → e`
-- `e * 0 → 0`
-- `0 * e → 0`
-- `e - e -> 0`
 
 Distributivity rules : 
 - `( a * b ) + ( a * c ) → a * ( b + c )`
@@ -79,17 +81,17 @@ Distributivity rules :
 - `( b * a ) + ( c * a ) → a * ( b + c )`
 
 **Rules for Multiset calculator REPL:**
-
-- `e * e → e`
-- `{} * e → {}`
-- `e * {} → {}`
 - `e + {} → e`
 - `{} + e → e`
-- `e - e -> {}`
+- `e * {} → {}`
+- `{} * e → {}`
+- `e - e → {}`
+  
+- `e * e → e`
 
 **Nested application of rules**
 
-For some expressions, such as `(x + (0 + (0 + 0)))` it is not enough to simplify the top-level and then recursively simplify the sub-parts (this is called simplifying top-down). In this case we will then end up with `x + (0 + 0))` instead of `x + 0`. To solve this, choose one of two tactics:
+For some expressions, such as `(x + (0 + (0 + 0)))` it is not enough to simplify the top-level and then recursively simplify the sub-parts (this is called simplifying top-down). In this case, we will then end up with `x + (0 + 0))` instead of `x + 0`. To solve this, choose one of two tactics:
 * Simplify *bottom-up*: first simplify the sub-parts of the expression, before simplifying the whole. 
 * Simplify until you reach a *fixpoint*. Apply rules in top-down fashion repeatedly until the expression does not change anymore. 
 
@@ -138,7 +140,7 @@ In the expression `a * b` the subexpressions `l=a` and `r=b` do not involve oper
 
 In the expression `((1 + x) * 2)` we see that `l= ( 1 + x ),r=2, op=*`. The subexpression `l=( 1 + x )` has an operator `op2=+` and `op2(+)` has lower precedence than `op`. Hence parentheses are needed around `(1+ x)`. The subexpression `2` does not involve operators and hence no parentheses are needed.
 
-This gives us then end result `a * b + (1 + x) * 2`.
+This gives us the end result `a * b + (1 + x) * 2`.
 
 ### Operators used and their precedence
 
@@ -154,7 +156,7 @@ This gives us then end result `a * b + (1 + x) * 2`.
 We have given a pretty barebones skeleton. This is to give you the full freedom of implementation. We have supplied you with the minimum for this assignment to work with the tests.
 
 ### REPLs
-For the REPL we have given a `REPLBase`, which is an abstract class. This can be used for code sharing, explained [below](#inheritance). `IntREPL` and `MultiSetREPL` extend this abstract class. These, and `REPLBase`, you need to modify with your own implementation. The `REPL` trait you cannot modify, as this is used for running the REPL. Also do not modify the `REPLFactory`, and `RunREPL`, these don't need to be implemented further.
+For the REPL we have given a `REPLBase`, which is an abstract class. This can be used for code sharing, explained [below](#inheritance). `IntREPL` and `MultiSetREPL` extend this abstract class. You need to modify `IntREPL`, `MultiSetREPL` and `REPLBase`, with your own implementation. The `REPL` trait you cannot modify, as this is used for running the REPL. Also do not modify the `REPLFactory`, and `RunREPL`, these don't need to be implemented further.
 
 ### MultiSet
 Implement your MultiSet here. Note that **all** the functions we have given need to be implemented!
@@ -198,13 +200,13 @@ With this now you can use your REPLs as any other simple REPL, inputting an expr
 
 ### Techniques for code reuse
 ##### Inheritance
-Scala, and other high level languages, offers many techniques to have good code reuse. With inheritance, you can reuse code for classes which the same structure. This allows classes to dispatch method calls dynamically, also known as [dynamic dispatching](https://en.wikipedia.org/wiki/Dynamic_dispatch). Scala will call the lowest implementation of a method. In this method you can call the method of the super class, by `super.methodName()`. (hint: This is especially handy for the reusing common simplification rules)
+Scala, and other high level languages, offer many techniques to have good code reuse. With inheritance, you can reuse code for classes with the same structure. This allows classes to dispatch method calls dynamically, also known as [dynamic dispatching](https://en.wikipedia.org/wiki/Dynamic_dispatch). Scala will call the lowest implementation of a method. In this method, you can call the method of the super class, by `super.methodName()`. (hint: This is especially handy for reusing common simplification rules)
 
-In the skeleton we have given you this level of inheritance: REPL(trait) <-- REPLBase <-- IntREPL, MultiSetREPL. This meaning, shared code between IntREPL and MultiSetREPL should go into REPLBase. REPLBase is for a generic REPL, while IntREPL and MultiSetREPL are specific types of REPLS.
+In the skeleton we have given you this level of inheritance: REPL(trait) <-- REPLBase <-- IntREPL, MultiSetREPL. Hence, the shared code between IntREPL and MultiSetREPL should go into REPLBase. REPLBase is for a generic REPL, while IntREPL and MultiSetREPL are specific types of REPLS.
             
         
 #### Using associated type (`type Base` in the REPL base)
-An abstract class can have an abstract type variable. This type should be defined in a child class. In this assignment we make use of this with `type Base`, in the REPL base file. `Base` is now an abstract variable, and by overloading this in IntREPL or MultiSetREPL, with `Int` or `MultiSet`, we can specify this type. With this you can return a type that is still unknown/abstract. For example, you can write an evaluate function that returns this `Base`:
+An abstract class can have an abstract type variable. This type should be defined in a concrete child class. In this assignment we make use of this with `type Base`, in the REPL base file. `Base` is now an abstract variable, and by overloading this in IntREPL or MultiSetREPL, with `Int` or `MultiSet`, we can specify this type. With this you can return a type that is still unknown/abstract. For example, you can write an evaluate function that returns this `Base`:
 
 ```scala
 abstract class REPLBase extends REPL {
@@ -251,3 +253,12 @@ Total : 10 points
 
 Note that to get full points for sharing code, the common code needs to go in `REPLBase` and need to have extension points (e.g. abstract methods) such that you can easily add repls by subclassing `REPLBase`.  The `REPLBase` code should not have any code specific to the Integer or Multiset REPL (this should be in their respective classes). It should for example be possible to add another repl which centers around `Booleans` *without* modifying the `REPLBase` code. For booleans, you can assume that the rules involving zero (as seen in the IntREPL/MultisetREPL) hold, but not distributivity or `e * e = e`. Hence you will for example not get full points if you have in REPLBase that checks via `if` statements or something similar whether it is handling Ints or Multisets.
 
+Note that the simplification rules common to IntREPL and MultiSetRepl are:
+
+- `𝟘 + e → e`
+- `e + 𝟘 → e`
+- `𝟘 * e → 𝟘`
+- `e * 𝟘 → 𝟘`
+- `e - e → 𝟘`
+
+Where `𝟘 = 0` for `IntREPL` and `𝟘 = {}` for `MultiSetREPL`.
