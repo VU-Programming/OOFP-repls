@@ -251,3 +251,6 @@ Total : 10 points
 
 Note that to get full points for sharing code, the common code needs to go in `REPLBase` and need to have extension points (e.g. abstract methods) such that you can easily add repls by subclassing `REPLBase`.  The `REPLBase` code should not have any code specific to the Integer or Multiset REPL (this should be in their respective classes). It should for example be possible to add another repl which centers around `Booleans` *without* modifying the `REPLBase` code. For booleans, you can assume that the rules involving zero (as seen in the IntREPL/MultisetREPL) hold, but not distributivity or `e * e = e`. Hence you will for example not get full points if you have in REPLBase that checks via `if` statements or something similar whether it is handling Ints or Multisets.
 
+Code style is judged as described in the readable code lectures and the
+ [code style grading guideline](https://canvas.vu.nl/courses/50305/pages/code-style). The maximum style grade you can get depends on how much of the previous 8 points you got. For example, if you get 5 points from the tests and did not do any reuse, then you maximum style points 5/8 * 2 = 1.25. Todo: Less points for style here.
+
