@@ -1,25 +1,17 @@
-import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     id 'scala'
     id 'idea'
 }
 
-test {
-    useJUnitPlatform()
-    include "**/AllTests.class"
-}
 
 ext {
     scalaMajorVersion = '2.13'
-    scalaVersion = '2.13.11'
+    scalaVersion = '2.13.14'
 }
 
 
 repositories {
-    flatDir {
-        dirs 'lib'
-    }
 
     mavenCentral()
 }
@@ -32,9 +24,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'lib')
     testImplementation('junit:junit:4.13.2')
     testImplementation("org.scala-lang:scala-reflect") {
-      version {
-          strictly '2.13.11'
-      }
     }
     testImplementation('org.junit.vintage:junit-vintage-engine:5.9.0')
     testImplementation("org.scalatest:scalatest_${scalaMajorVersion}:3.0.8")
@@ -45,7 +34,6 @@ dependencies {
 task(runIntREPL, dependsOn: 'classes', type: JavaExec) {
     group = "Runnables"
     mainClass.set("repls.RunREPL")
-    classpath = sourceSets.main.runtimeClasspath
     args "IntREPL"
     standardInput = System.in
     outputs.upToDateWhen { false }
@@ -54,7 +42,6 @@ task(runIntREPL, dependsOn: 'classes', type: JavaExec) {
 task(runMultiSetREPL, dependsOn: 'classes', type: JavaExec) {
     group = "Runnables"
     mainClass.set("repls.RunREPL")
-    classpath = sourceSets.main.runtimeClasspath
     args "MultiSetREPL"
     standardInput = System.in
     outputs.upToDateWhen { false }
@@ -79,14 +66,6 @@ task zip(type: Zip) {
 }
 
 
-tasks.withType(Test) {
-    group = "verification"
-    testLogging {
-        events  TestLogEvent.FAILED,
-                TestLogEvent.PASSED,
-                TestLogEvent.STANDARD_OUT
-    }
-}
 
 task spec(dependsOn: ['testClasses'], type: JavaExec) {
   main = 'org.scalatest.tools.Runner'
@@ -128,15 +107,3 @@ task fraction4_2(type: JavaExec, dependsOn: classes) {
 
 
 
-// The path of the scala-compiler jar
-def scalaPath = buildscript.configurations.classpath.find {
-    it.name == "scala-compiler-${scalaVersion}.jar"
-}
-
-// The classpath of this project and its dependencies
-def classpath = sourceSets.main.runtimeClasspath.asPath
-
-// Prints the classpath needed to launch the REPL
-task printClasspath {
-    println "${scalaPath}:${classpath}"
-}
