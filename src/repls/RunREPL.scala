@@ -1,7 +1,8 @@
 // You do not need to modify this file
 package repls
+import scala.io.StdIn.readLine
 
-object RunIntREPL {
+class RunIntREPL {
   def main(args: Array[String]): Unit = {
     REPLFactory.makeIntREPL().run()
   }
@@ -16,12 +17,9 @@ object RunMultiSetREPL {
 object RunREPL {
 
   def main(args: Array[String]): Unit = {
-    val repl = {
-      val classType = args(0)
-      if (classType == "IntREPL") REPLFactory.makeIntREPL()
-      else if (classType == "MultiSetREPL") REPLFactory.makeMultiSetREPL()
-      else throw new Error("Not a valid REPL")
-    }
+    println("Adjust code in repls.RunREPL to run the other REPL")
+    val repl = REPLFactory.makeIntREPL()
+    // val repl = REPLFactory.makeMultiSetREPL()
     repl.run()
   }
 }
