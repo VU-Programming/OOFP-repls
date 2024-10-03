@@ -238,15 +238,15 @@ Implement the MultiRepl and share code between the MultiSet REPL and the Int Rep
 
 Grading is mostly based on how much code is reused, and is built up as follows:
 * Amount of tests passed (`ReplTestSuite4_2`): 5.5 points
-* Reuse of common structure of `+`,`-` and `*` in `MultiSet` 0.5 points (hint : use first-class functions)
+* Reuse of common structure of `+`,`-` and `*` in `MultiSet` 0.5 points (hint : use first-class functions, all operations combine the number of times each element occurs, the difference is in how these counts are combined)
 *  Reuse of REPL code between the int repl and multiset repl
     * Sharing of the expression representation 0.25 points
     * Sharing of the code related to variable assignment 0.25 points
-    * Sharing of the commonalities in parsing expressions (string -> Expression)) 0.5 points
+    * Sharing of the commonalities in parsing expressions (string -> Expression)) 1 points
     * Sharing of the commonalities in evaluating expressions 0.5 points
 
-    * Sharing of the commonalities in simplifying expressions 0.5. Note: You cannot get these points if you do not use pattern matching for rewriting.
-* Code style 2 points
+    * Sharing of the commonalities in simplifying expressions 1. Note: You cannot get these points if you do not use pattern matching for rewriting.
+* Code style 1 points
 * Do NOT use regular expressions instead of pattern matching for rewriting. Using regular expressions for rewriting will give you 0 style points.
 
 Total : 10 points
@@ -255,7 +255,7 @@ Note that to get full points for sharing code, the common code needs to go in `R
 
 
 Code style is judged as described in the readable code lectures and the
- [code style grading guideline](https://canvas.vu.nl/courses/78072/pages/code-style). The maximum style grade you can get depends on how much of the previous 8 points you got. For example, if you get 5 points from the tests and did not do any reuse, then you maximum style points 5/8 * 2 = 1.25. Todo: Less points for style here.
+ [code style grading guideline](https://canvas.vu.nl/courses/78072/pages/code-style). The maximum style grade you can get depends on how much of the previous 9 points you got. For example, if you get 4.5 points from the tests and did not do any reuse, then you maximum style points 0.5. 
 
 
 Note that the simplification rules common to IntREPL and MultiSetRepl are:
