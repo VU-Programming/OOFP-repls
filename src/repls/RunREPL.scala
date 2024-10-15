@@ -2,7 +2,7 @@
 package repls
 import scala.io.StdIn.readLine
 
-class RunIntREPL {
+object RunIntREPL {
   def main(args: Array[String]): Unit = {
     REPLFactory.makeIntREPL().run()
   }
@@ -17,6 +17,7 @@ object RunMultiSetREPL {
 object RunREPL {
 
   def main(args: Array[String]): Unit = {
+    // This method is run when doing ./gradlew run
     println("Adjust code in repls.RunREPL to run the other REPL")
     val repl = REPLFactory.makeIntREPL()
     // val repl = REPLFactory.makeMultiSetREPL()
