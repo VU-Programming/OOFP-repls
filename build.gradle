@@ -14,7 +14,7 @@ application {
 
 ext {
     scalaMajorVersion = '2.13'
-    scalaVersion = '2.13.14'
+    scalaVersion = '2.13.16'
 }
 
 
