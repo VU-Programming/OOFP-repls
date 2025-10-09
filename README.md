@@ -186,14 +186,12 @@ The skeleton comes with an [companion object](https://docs.scala-lang.org/overvi
 
 From the command line run: 
 ```
- ./gradlew runIntREPL 
-// or 
-./gradlew runMultiSetREPL
+ ./gradlew run 
 ```
 
-In IntelliJ: In the gradle tab (on the right side) there is a folder/group 'repls/Tasks/runnables'. In here there are two tasks, namely: runIntREPL and runMultiSetREPL. You can run these to get a working instance of IntREPL and MultiSetREPL, respectively.
+To change from the IntREPL to the MultiSetREPL or vice versa, navigate to `src/repls/RunREPL` and change the code as indicated on line 21-23.
 
-Another method would be by running the RunREPL object file, and give the respective type as argument, be it IntREPL or MultiSetREPL. This can most easily be done by going into "Edit Configurations..." (in the drop down menu next to the run button on the top). In here you can specify the type in the "Program arguments" field.
+In IntelliJ, navigate to `src/repls/RunREPL.scala` and then either right-click inside the `RunIntRepl` object and click `Run "RunIntRepl"` or right-click inside the `RunMultiSetRepl` object and click `Run "RunMultiSetRepl"`. 
 
 With this now you can use your REPLs as any other simple REPL, inputting an expression and outputting, hopefully, the expected output. In combination with the test examples, you can use this to help debug your implementation, and check if it returns the correct output. 
 
