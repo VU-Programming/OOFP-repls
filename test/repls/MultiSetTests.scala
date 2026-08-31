@@ -68,7 +68,7 @@ class MultiSetTests extends TestBase {
     test("Sum of multiset with empty set") {
         assertResult(Seq('a')) {
             val singleElement = MultiSet(Seq('a'))
-            val emptySet = MultiSet[Char](Seq.empty)
+            val emptySet = MultiSet[Char](Seq.empty: Seq[Char])
 
             (emptySet + singleElement).toSeq.sorted
         }
@@ -99,7 +99,7 @@ class MultiSetTests extends TestBase {
     test("Difference of a multiset with empty set") {
         assertResult(Seq.empty) {
             val singleElement = MultiSet(Seq('a'))
-            val emptySet = MultiSet[Char](Seq.empty)
+            val emptySet = MultiSet[Char](Seq.empty: Seq[Char])
 
             (emptySet - singleElement).toSeq.sorted
         }
@@ -130,7 +130,7 @@ class MultiSetTests extends TestBase {
     test("Intersection with empty set") {
         assertResult(Seq.empty) {
             val multiset = MultiSet(Seq(1,1,2,3))
-            val emptySet = MultiSet[Int](Seq.empty)
+            val emptySet = MultiSet[Int](Seq.empty: Seq[Int])
 
             (multiset * emptySet).toSeq.sorted
         }
