@@ -41,14 +41,14 @@ abstract class ReportFraction {
 }
 
 object ReportFraction4_1 extends ReportFraction {
-    override def Tests = new ReplsTestSuite4_1()
+    override def Tests: ReplsTestSuite4_1 = new ReplsTestSuite4_1()
 
     def main(args: Array[String]): Unit = {
         val out = System.out;
         val scoreCounter = runGetScoreCounter()
 
         out.printf("You got %d/%d points!\n", scoreCounter.points, scoreCounter.maxPoints)
-        if(scoreCounter.points >=Tests.MinPointsToPass ) out.printf("You passed exercise 4.1\n")
+        if(scoreCounter.points >= Tests.MinPointsToPass ) out.printf("You passed exercise 4.1\n")
         else out.printf("You did not pass exercise 4.1 yet\n")
         val frac = if(scoreCounter.points >= Tests.MinPointsToPass) 1.0 else 0
         out.printf("Fractiontouseforcodegrade %.2f",frac)
@@ -56,7 +56,7 @@ object ReportFraction4_1 extends ReportFraction {
 }
 
 object ReportFraction4_2 extends ReportFraction {
-    override def Tests = new ReplsTestSuite4_2()
+    override def Tests: ReplsTestSuite4_2 = new ReplsTestSuite4_2()
 
     def main(args: Array[String]): Unit = {
         val out = System.out;

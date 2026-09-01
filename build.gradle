@@ -13,8 +13,8 @@ application {
 }
 
 ext {
-    scalaMajorVersion = '2.13'
-    scalaVersion = '2.13.16'
+    scalaMajorVersion = '3.3'
+    scalaVersion = "${scalaMajorVersion}.8"
 }
 
 
@@ -27,13 +27,14 @@ sourceSets.main.scala.srcDirs = ['src']
 sourceSets.test.scala.srcDirs = ['test']
 
 dependencies {
-    implementation "org.scala-lang:scala-library:${scalaVersion}"
+    implementation("org.scala-lang:scala3-library_3:${scalaVersion}")
     implementation fileTree(include: ['*.jar'], dir: 'lib')
     testImplementation('junit:junit:4.13.2')
-    testImplementation("org.scala-lang:scala-reflect") {
-    }
+    // testImplementation("org.scala-lang:scala-reflect") {
+    // }
     testImplementation('org.junit.vintage:junit-vintage-engine:5.9.0')
-    testImplementation("org.scalatest:scalatest_${scalaMajorVersion}:3.0.8")
+    testImplementation("org.scalatest:scalatest_3:3.2.19")
+    testImplementation("org.scalatestplus:junit-4-13_3:3.2.19.0")
 }
 
 
