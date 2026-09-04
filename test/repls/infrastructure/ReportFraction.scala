@@ -2,7 +2,8 @@
 package repls.infrastructure
 
 import java.io.{OutputStream, PrintStream}
-
+import java.io.{FileOutputStream, PrintWriter}
+import java.nio.file.{Files, Path}
 import org.scalatest.{Args, ConfigMap, Reporter}
 import org.scalatest.events.{Event, TestFailed, TestSucceeded}
 import repls.{AllTests, ReplsTestSuite4_1, ReplsTestSuite4_2, ReplsTestSuitesBase}
@@ -50,8 +51,9 @@ object ReportFraction4_1 extends ReportFraction {
         out.printf("You got %d/%d points!\n", scoreCounter.points, scoreCounter.maxPoints)
         if(scoreCounter.points >= Tests.MinPointsToPass ) out.printf("You passed exercise 4.1\n")
         else out.printf("You did not pass exercise 4.1 yet\n")
-        val frac = if(scoreCounter.points >= Tests.MinPointsToPass) 1.0 else 0
-        out.printf("Fractiontouseforcodegrade %.2f",frac)
+        val frac = if(scoreCounter.points >= Tests.MinPointsToPass) 1 else 0
+        val result = s"""{ "tag": "points", "points": "${frac}/${1}" }"""
+        Files.writeString(Path.of("grade"), result)
     }
 }
 
@@ -64,6 +66,7 @@ object ReportFraction4_2 extends ReportFraction {
 
         out.printf("You got %d/%d points!\n", scoreCounter.points, scoreCounter.maxPoints)
         out.printf("Your base grade for excercise 4.2 will be: %.2f\n", scoreCounter.fraction() * Tests.MaxPoints)
-        out.printf("Fractiontouseforcodegrade %.2f", scoreCounter.fraction())
+        val result = s"""{ "tag": "points", "points": "${scoreCounter.points}/${scoreCounter.maxPoints}" }"""
+        Files.writeString(Path.of("grade"), result)
     }
 }
