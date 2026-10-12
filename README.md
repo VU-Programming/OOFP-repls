@@ -261,7 +261,7 @@ Note that to get full points for sharing code, the common code needs to go in `R
 
 
 Code style is judged as described in the readable code lectures and the
- [code style grading guideline](https://canvas.vu.nl/courses/78072/pages/code-style). The maximum style grade you can get depends on how much of the previous 9 points you got. For example, if you get 4.5 points from the tests and did not do any reuse, then you maximum style points 0.5. 
+ [code style grading guideline](https://canvas.vu.nl/courses/90312/pages/code-style). The maximum style grade you can get depends on how much of the previous 9 points you got. For example, if you get 4.5 points from the tests and did not do any reuse, then you maximum style points 0.5. 
 
 
 Note that the simplification rules common to IntREPL and MultiSetRepl are:
